@@ -21,12 +21,12 @@
       :class="styles.arrayList.itemWrapper"
     >
       <array-list-element
-        :move-up="moveUp(control.path, index)"
+        :move-up="moveUp!(control.path, index)"
         :move-up-enabled="control.enabled && index > 0"
-        :move-down="moveDown(control.path, index)"
+        :move-down="moveDown!(control.path, index)"
         :move-down-enabled="control.enabled && index < control.data.length - 1"
         :delete-enabled="control.enabled && !minItemsReached"
-        :delete="removeItems(control.path, [index])"
+        :delete="removeItems!(control.path, [index])"
         :label="childLabelForIndex(index)"
         :styles="styles"
       >

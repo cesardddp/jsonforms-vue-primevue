@@ -47,6 +47,7 @@ import {
 } from '@jsonforms/vue';
 import { useVanillaLayout } from '../util';
 
+
 const layoutRenderer = defineComponent({
   name: 'CategorizationRenderer',
   components: {

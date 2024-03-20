@@ -77,10 +77,11 @@ import {
 import {
   DispatchRenderer,
   rendererProps,
-  useJsonFormsCategorization,
   type RendererProps,
+  useJsonFormsCategorization,
 } from '@jsonforms/vue';
 import { useVanillaLayout } from '../util';
+
 
 const layoutRenderer = defineComponent({
   name: 'CategorizationStepperRenderer',

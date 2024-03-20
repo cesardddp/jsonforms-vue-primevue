@@ -8,7 +8,7 @@
       :checked="dataHasEnum(checkElement.value)"
       :disabled="!control.enabled"
       :placeholder="appliedOptions?.placeholder"
-      @change="(event) => toggle(checkElement.value, event.target.checked)"
+      @change="(event) => toggle(checkElement.value, (event.target! as HTMLInputElement).checked)"
     />
     <label :for="control.id + `-input-${index}`">
       {{ checkElement.label }}
