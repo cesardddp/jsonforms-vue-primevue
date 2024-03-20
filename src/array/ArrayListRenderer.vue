@@ -86,7 +86,7 @@ const controlRenderer = defineComponent({
     arraySchema(): JsonSchema | undefined {
       return Resolve.schema(
         this.schema,
-        this.control.uischema.scope,
+        this.control.uischema.scope??'',
         this.control.rootSchema
       );
     },

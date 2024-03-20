@@ -68,7 +68,7 @@ const controlRenderer = defineComponent({
       const result = findUISchema(
         this.control.uischemas,
         this.control.schema,
-        this.control.uischema.scope,
+        this.control.uischema.scope??'',
         this.control.path,
         uiSchemaGenerator,
         this.control.uischema,

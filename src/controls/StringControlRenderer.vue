@@ -7,7 +7,9 @@
     :id="controlWrapper.id"
     :styles="styles"
     :is-focused="isFocused"
-    :applied-options="appliedOptions">
+    :applied-options="appliedOptions"
+    :label="controlWrapper.label"
+    >
     
     <InputText
       class="text-red-500" 
