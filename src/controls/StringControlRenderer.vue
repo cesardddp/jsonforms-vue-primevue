@@ -1,21 +1,24 @@
 <template>
   <control-wrapper
-    v-bind="controlWrapper"
+    :description="controlWrapper.description"
+    :errors="controlWrapper.errors"
+    :required="controlWrapper.required"
+    :visible="controlWrapper.visible"
+    :id="controlWrapper.id"
     :styles="styles"
     :is-focused="isFocused"
-    :applied-options="appliedOptions"
-  >
-    <input
-      :id="control.id + '-input'"
-      :class="styles.control.input"
-      :value="control.data"
+    :applied-options="appliedOptions">
+    
+    <InputText
+      class="text-red-500" 
+      :id="control.id + '-input'" 
+      :class="styles.control.input" 
+      :value="control.data" 
       :disabled="!control.enabled"
-      :autofocus="appliedOptions.focus"
-      :placeholder="appliedOptions.placeholder"
+      :autofocus="appliedOptions.focus" 
+      :placeholder="appliedOptions.placeholder" 
       @change="onChange"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
-    />
+      @focus="isFocused = true" @blur="isFocused = false" />
   </control-wrapper>
 </template>
 
@@ -24,9 +27,9 @@ import {
   ControlElement,
   JsonFormsRendererRegistryEntry,
   rankWith,
-  isStringControl,
-} from '@jsonforms/core';
-import { defineComponent } from 'vue';
+  isStringControl
+} from "@jsonforms/core";
+import { defineComponent } from "vue";
 import {
   rendererProps,
   useJsonFormsControl,
@@ -34,6 +37,7 @@ import {
 } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVanillaControl } from '../util';
+import InputText from "primevue/inputtext";
 
 const controlRenderer = defineComponent({
   name: 'StringControlRenderer',
@@ -44,10 +48,25 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVanillaControl(
+    const {
+      control,
+      styles,
+      controlWrapper,
+      isFocused,
+      appliedOptions,
+      onChange
+    } = useVanillaControl(
       useJsonFormsControl(props),
       (target) => target.value || undefined
     );
+    return {
+      control,
+      styles,
+      controlWrapper,
+      isFocused,
+      appliedOptions,
+      onChange
+    }
   },
 });
 
@@ -57,4 +76,5 @@ export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
   tester: rankWith(1, isStringControl),
 };
+
 </script>
