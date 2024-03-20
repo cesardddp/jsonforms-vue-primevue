@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ES2021",
-    "module": "ES2020",
-    "skipLibCheck": true,
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "strict": true,
-    "declaration": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "importHelpers": true,
-    "moduleResolution": "node",
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "outDir": "./lib",
-    "types": ["node", "vue", "mocha", "chai"],
-    "lib": ["ES2021", "dom", "dom.iterable", "scripthost"]
+    "lib": ["ESNext", "DOM"],
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowJs": true,
   },
-  "exclude": ["node_modules", "lib"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "shims-vue.d.ts", "shims-vue.d.ts"],
+  "exclude": ["node_modules", "lib"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
