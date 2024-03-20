@@ -17,6 +17,19 @@
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
+    <Checkbox
+      :binary="true"
+      :id="control.id + '-input'"
+      type="checkbox"
+      :class="styles.control.input"
+      :checked="!!control.data"
+      :disabled="!control.enabled"
+      :autofocus="appliedOptions.focus"
+      :placeholder="appliedOptions.placeholder"
+      @change="onChange"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
+    />
   </control-wrapper>
 </template>
 
@@ -35,6 +48,7 @@ import {
 } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVanillaControl } from '../util';
+import Checkbox from "primevue/checkbox";
 
 const controlRenderer = defineComponent({
   name: 'BooleanControlRenderer',

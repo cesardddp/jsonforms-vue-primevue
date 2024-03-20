@@ -1,18 +1,17 @@
 <template>
   <div v-if="visible" :id="id" :class="styles.control.root">
-    <label
-      :for="id + '-input'"
-      :class="[styles.control.label, required ? styles.control.required : '']"
-    >
+    <label :class="[styles.control.label, required ? styles.control.required : '']" :for="id + '-input'">
       {{ label }}
       <span v-if="showAsterisk" :class="styles.control.asterisk">*</span>
     </label>
     <div :class="styles.control.wrapper">
       <slot></slot>
     </div>
-    <div :class="errors ? styles.control.error : styles.control.description">
+
+    <!-- mostra erro se houver caso contrário mostra a descrição se estiver focado -->
+    <p :class="errors ? (styles.control.error ?? 'text-red-500') : styles.control.description ?? 'text-sm text-gray-500'">
       {{ errors ? errors : showDescription ? description : null }}
-    </div>
+    </p>
   </div>
 </template>
 
