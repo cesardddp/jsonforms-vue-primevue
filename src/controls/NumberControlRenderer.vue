@@ -5,7 +5,7 @@
     :is-focused="isFocused"
     :applied-options="appliedOptions"
   >
-    <input
+    <InputNumber
       :id="control.id + '-input'"
       type="number"
       :step="step"
@@ -36,6 +36,8 @@ import {
 } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVanillaControl } from '../util';
+import InputNumber from 'primevue/inputnumber';
+
 
 const controlRenderer = defineComponent({
   name: 'NumberControlRenderer',

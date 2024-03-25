@@ -5,8 +5,8 @@
     :is-focused="isFocused"
     :applied-options="appliedOptions"
   >
-    <textarea
-      :id="control.id + '-input'"
+  <Textarea rows="5" cols="30"      :id="control.id + '-input'"
+  autoResize
       :class="styles.control.textarea"
       :value="control.data"
       :disabled="!control.enabled"
@@ -36,7 +36,7 @@ import {
 } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVanillaControl } from '../util';
-
+import Textarea from 'primevue/textarea';
 const controlRenderer = defineComponent({
   name: 'MultiStringControlRenderer',
   components: {
