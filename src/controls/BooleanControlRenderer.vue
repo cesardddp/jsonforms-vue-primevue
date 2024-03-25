@@ -5,19 +5,7 @@
     :is-focused="isFocused"
     :applied-options="appliedOptions"
   >
-    <input
-      :id="control.id + '-input'"
-      type="checkbox"
-      :class="styles.control.input"
-      :checked="!!control.data"
-      :disabled="!control.enabled"
-      :autofocus="appliedOptions.focus"
-      :placeholder="appliedOptions.placeholder"
-      @change="onChange"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
-    />
-    <Checkbox
+      <Checkbox
       :binary="true"
       :id="control.id + '-input'"
       type="checkbox"
@@ -31,6 +19,7 @@
       @blur="isFocused = false"
     />
   </control-wrapper>
+  
 </template>
 
 <script lang="ts">
