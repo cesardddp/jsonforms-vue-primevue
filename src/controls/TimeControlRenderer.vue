@@ -5,11 +5,12 @@
     :is-focused="isFocused"
     :applied-options="appliedOptions"
   >
-    <input
+  <Calendar showTime hourFormat="24"  timeOnly
+
       :id="control.id + '-input'"
       type="time"
       :class="styles.control.input"
-      :value="control.data"
+      v-model="control.data"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
@@ -27,7 +28,7 @@ import {
   rankWith,
   isTimeControl,
 } from '@jsonforms/core';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import {
   rendererProps,
   useJsonFormsControl,
@@ -35,6 +36,8 @@ import {
 } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVanillaControl } from '../util';
+import Calendar from 'primevue/calendar';
+
 
 const controlRenderer = defineComponent({
   name: 'TimeControlRenderer',

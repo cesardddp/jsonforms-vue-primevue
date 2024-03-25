@@ -5,11 +5,11 @@
     :is-focused="isFocused"
     :applied-options="appliedOptions"
   >
-    <input
+  <Calendar 
       :id="control.id + '-input'"
       type="date"
       :class="styles.control.input"
-      :value="control.data"
+      v-model="control.data"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
@@ -35,6 +35,8 @@ import {
 } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVanillaControl } from '../util';
+  import Calendar from 'primevue/calendar';
+
 
 const controlRenderer = defineComponent({
   name: 'DateControlRenderer',

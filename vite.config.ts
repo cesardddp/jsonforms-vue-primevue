@@ -6,6 +6,7 @@ import { resolve } from "path";
 export default defineConfig({
   plugins: [vue()],
   build: {
+    minify: false,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: 'jsonforms-vue-primevue',
