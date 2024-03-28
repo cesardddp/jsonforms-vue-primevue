@@ -5,15 +5,15 @@
     :is-focused="isFocused"
     :applied-options="appliedOptions"
   >
-    <input
+  <Calendar 
       :id="control.id + '-input'"
       type="datetime-local"
       :class="styles.control.input"
-      :value="dataTime"
+      :model-value="dataTime"
+      @update:model-value="onChange"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
-      @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
@@ -35,6 +35,7 @@ import {
 } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVanillaControl } from '../util';
+import Calendar from 'primevue/calendar';
 
 const toISOString = (inputDateTime: string) => {
   return inputDateTime === '' ? undefined : inputDateTime + ':00.000Z';

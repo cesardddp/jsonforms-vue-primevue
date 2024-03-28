@@ -1,4 +1,4 @@
-<script lang="ts">
+''<script lang="ts">
 import { defineComponent } from 'vue';
 import { JsonForms, JsonFormsChangeEvent } from '../../config/jsonforms';
 import { vanillaRenderers, mergeStyles, defaultStyles } from '../../src';
