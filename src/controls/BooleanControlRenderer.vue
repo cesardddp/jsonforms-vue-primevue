@@ -4,7 +4,14 @@
     :styles="styles"
     :is-focused="isFocused"
     :applied-options="appliedOptions"
-  >
+    
+    type="checkbox"
+    :path="control.path"
+    v-slot="{
+      handleChange,
+      inputValue
+    }"
+    >
       <Checkbox
       :binary="true"
       :id="control.id + '-input'"
@@ -14,8 +21,9 @@
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
-      @change="onChange"
-      @focus="isFocused = true"
+      :name="path"
+      :value="inputValue" 
+      @change="handleChange"      @focus="isFocused = true"
       @blur="isFocused = false"
     />
   </control-wrapper>

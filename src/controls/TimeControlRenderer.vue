@@ -4,8 +4,19 @@
     :styles="styles"
     :is-focused="isFocused"
     :applied-options="appliedOptions"
+
+    type="time"
+    :path="control.path"
+    v-slot="{
+      handleChange,
+      inputValue
+    }"
   >
   <Calendar showTime hourFormat="24"  timeOnly
+
+
+  :value="inputValue" 
+      @change="handleChange"
 
       :id="control.id + '-input'"
       type="time"
@@ -14,7 +25,6 @@
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
-      @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />

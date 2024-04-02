@@ -4,8 +4,19 @@
     :styles="styles"
     :is-focused="isFocused"
     :applied-options="appliedOptions"
+
+    type="date"
+    :path="control.path"
+    v-slot="{
+      handleChange,
+      inputValue
+    }"
   >
   <Calendar 
+
+  :value="inputValue" 
+      @change="handleChange"
+
       :id="control.id + '-input'"
       type="date"
       :class="styles.control.input"
@@ -13,7 +24,6 @@
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
-      @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />

@@ -4,17 +4,27 @@
     :styles="styles"
     :is-focused="isFocused"
     :applied-options="appliedOptions"
+
+    type="number"
+    :path="control.path"
+    v-slot="{
+      handleChange,
+      inputValue
+    }"
   >
+  {{inputValue}}
     <InputNumber
       :id="control.id + '-input'"
       type="number"
       :step="step"
       :class="styles.control.input"
-      :value="control.data"
+      :name="path"
+      :model-value="inputValue" 
+      @input="(e:InputNumberInputEvent) => {handleChange((e.value as unknown) as number)}"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
-      @change="onChange"
+      @change="handleChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
@@ -36,7 +46,7 @@ import {
 } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVanillaControl } from '../util';
-import InputNumber from 'primevue/inputnumber';
+import InputNumber, { InputNumberInputEvent } from 'primevue/inputnumber';
 
 
 const controlRenderer = defineComponent({

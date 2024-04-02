@@ -9,17 +9,24 @@
     :is-focused="isFocused"
     :applied-options="appliedOptions"
     :label="controlWrapper.label"
+
+    type="text"
+    :path="control.path"
+    v-slot="{
+      handleChange,
+      inputValue
+    }"
     >
-    
     <InputText
       class="text-red-500" 
       :id="control.id + '-input'" 
       :class="styles.control.input" 
-      :value="control.data" 
+      :name="path"
+      :value="inputValue" 
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus" 
       :placeholder="appliedOptions.placeholder" 
-      @change="onChange"
+      @change="handleChange"
       @focus="isFocused = true" @blur="isFocused = false" />
   </control-wrapper>
 </template>
@@ -67,7 +74,6 @@ const controlRenderer = defineComponent({
       controlWrapper,
       isFocused,
       appliedOptions,
-      onChange
     }
   },
 });
