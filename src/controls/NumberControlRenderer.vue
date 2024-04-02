@@ -12,7 +12,6 @@
       inputValue
     }"
   >
-  {{inputValue}}
     <InputNumber
       :id="control.id + '-input'"
       type="number"
