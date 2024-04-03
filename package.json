@@ -1,7 +1,21 @@
 {
   "name": "jsonforms-vue-primevue",
-  "private": true,
+  "type": "module",
+  "private": false,
   "version": "0.0.0",
+  "files": [
+    "dist","src"
+  ],
+  "main": "./dist/jsonforms-vue-primevue.umd.ts",
+  "module": "./dist/jsonforms-vue-primevue.es.ts",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/jsonforms-vue-primevue.es.js",
+      "require": "./dist/jsonforms-vue-primevue.umd.ts"
+    },
+    "./dist/style.scss": "./dist/style.scss"
+  },
   "description": "Vue 3 PrimeVue renderers for JSON Forms",
   "repository": "https://github.com/cesardddp/jsonforms-vue-primevue/",
   "bugs": "https://github.com/cesardddp/jsonforms-vue-primevue/issues",
@@ -20,6 +34,7 @@
     "jsonforms",
     "frontend",
     "generator",
+    "builder",
     "input",
     "renderengine",
     "jsonschema",
@@ -29,25 +44,14 @@
     "customization",
     "html5",
     "css",
-    "tailwind"
+    "tailwind",
+    "primevue",
+    "veevalidate",
+    "vee-validate"
   ],
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/jsonforms-vue-primevue.umd.cjs",
-  "module": "./dist/jsonforms-vue-primevue.es.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/jsonforms-vue-primevue.es.js",
-      "require": "./dist/jsonforms-vue-primevue.umd.ts"
-    },
-    "./dist/style.scss": "./dist/style.scss"
-  },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -77,6 +81,7 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
+    "vite-plugin-dts": "^3.8.1",
     "vue-tsc": "^2.0.6"
   },
   "peerDependencies": {
