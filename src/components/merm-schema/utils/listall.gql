@@ -1,0 +1,54 @@
+query ListAll {
+  listApis {
+    items {
+      id
+    }
+  }
+
+  listApps {
+    items {
+      id
+    }
+  }
+
+  listModulos {
+    items {
+      id
+    }
+  }
+
+  listTelas {
+    items {
+      id
+    }
+  }
+
+  listModels {
+    items {
+      id
+    }
+  }
+
+  listCampos {
+    items {
+      id
+    }
+  }
+
+  listEnums {
+    items {
+      id
+    }
+  }
+
+  listTabelaSyncFusions {
+    items {
+      id
+    }
+  }
+  listAmplifyFormVues {
+    items {
+      id
+    }
+  }
+}

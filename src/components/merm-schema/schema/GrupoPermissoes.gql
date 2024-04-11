@@ -1,0 +1,122 @@
+# The organization info
+
+enum statusOrg {
+  ativo
+  inativo
+  arquivado
+  aprovacaoPendente
+}
+
+type Org
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  id: ID!
+
+  empresaInfo: DadosEmpresa! @hasOne
+
+  Tipo: tipoOrganizacaoEnum!
+
+  status: statusOrg!
+
+  cognitoGroup: Group! @hasOne(fields: ["cognitoGroupName"])
+  cognitoGroupName: ID!
+
+  Equipe: [Group!] @hasMany(indexName: "equipeByOrg", fields: ["id"])
+
+  Clientes: [Org!] @hasMany(indexName: "byCliente", fields: ["id"])
+  donoClienteId: ID @index(name: "byCliente")
+
+  # CAMPOS PERMISSOES------------------------------
+  dadosEmpresa: [DadosEmpresa!] @hasMany
+  aplicacao: [Aplicacao!] @hasMany
+  api: [Api!] @hasMany
+  entradaApi: [EntradaApi!] @hasMany
+  symphonia: [Symphonia!] @hasMany
+  log: [Log!] @hasMany
+  score: [Score!] @hasMany
+  meta: [Meta!] @hasMany
+  model: [Model!] @hasMany
+  campo: [Campo!] @hasMany
+  enum: [Enum!] @hasMany
+  modulo: [Modulo!] @hasMany
+  tela: [Tela!] @hasMany
+  card: [Card!] @hasMany
+  amplifyFormVue: [AmplifyFormVue!] @hasMany
+  grid: [Grid!] @hasMany
+  regras: [Regra!] @hasMany
+  apirest: [ApiREST!] @hasMany
+  ##---------------------------------------------
+}
+
+enum permissaoRWEnum {
+  R # Read
+  RW # Read and Write
+}
+
+# "equipes" ou grupo de uma organização (orggroup) são representados por "Groups" no schema
+# quando o grupo é uma equipe, ele possui a chave estrangeira orgIdEquipe com valor,
+# e quando representa uma organização o campo chave extrageira com valor é o "groupOrgId" (gerado automaticamente pelo aws-amplify devido a relação hasOne entre Org e Group)
+type Group
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  CognitoGroupName: ID! @primaryKey
+  Label: String!
+  Description: String
+
+  # Politica: [PoliticaAcesso!] @hasMany
+  regras: [Regra!] @manyToMany(relationName: "equipeRegras")
+
+  orgIdEquipe: ID @index(name: "equipeByOrg")
+  org: Org @belongsTo
+}
+
+##VTL
+type Regra
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  regraNome: String! @primaryKey
+  ModelPermissoes: [ModelPermissao!] @manyToMany(relationName: "modelsRegras")
+  equipes: [Group!] @manyToMany(relationName: "equipeRegras")
+  rotaRegras: [RegraListRota!] @manyToMany(relationName: "rotaRegras")
+  label : String
+  descricao : String
+}
+
+type ModelPermissao
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  ModelName: String! @primaryKey
+  Permissao: permissaoRWEnum! #The permission
+  regras: [Regra!] @manyToMany(relationName: "modelsRegras")
+  isRelationalTable: Boolean
+}
+
+enum tipoOrganizacaoEnum {
+  Cliente
+  Revendedor
+}
+
+type Rota
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  nome: String!
+  descricao: String
+  url: String!
+  regraslist: [RegraListRota!] @hasMany
+}
+
+type RegraListRota
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  regras: [Regra!] @manyToMany(relationName: "rotaRegras")
+}
+
+type ApiREST
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  id: ID!
+  nome: String!
+  descricao: String
+  url: String!
+  rotas: [Rota] @hasMany
+}

@@ -1,0 +1,96 @@
+
+
+
+query LISTAGRUPOS{
+  listGroups{
+    items{
+      CognitoGroupName
+    }
+  }
+}
+
+mutation ASSOCIAREGRAGUPO{
+  
+  createEquipeRegras(input:{
+    groupCognitoGroupName:"equipe-fMCPD393-admin",
+    regraRegraNome:"GestaoUsuariosVisualizacao"
+  }){
+    id
+    groupCognitoGroupName
+    regraRegraNome
+  }
+  
+}
+mutation ASSOCIAMODELPERMISSAOAREGRA{
+  Edicao: createModelsRegras(input:{regraRegraNome:"gestaoUsuariosEdicao",modelPermissaoModelName:"UserRW"}){
+    id
+    regraRegraNome
+    modelPermissaoModelName
+  }
+  
+  Visualizacao: createModelsRegras(input:{regraRegraNome:"gestaoUsuariosVisualizacao",modelPermissaoModelName:"UserR"}){
+    id
+    regraRegraNome
+    modelPermissaoModelName
+  }
+  
+}
+
+
+mutation CRIAREGRA{
+  Edicao: createRegra(input:{regraNome:"gestaoUsuariosEdicao"}){
+    regraNome
+    
+  }
+  
+  Visualizacao: createRegra(input:{regraNome:"gestaoUsuariosVisualizacao"}){
+    regraNome
+    
+  }
+}
+
+query AUTH($ModelName:String){
+  
+  listModelsRegras(filter:{modelPermissaoModelName:{eq:$ModelName}}){
+    items{
+      regra{
+        equipes{
+          items{
+            groupCognitoGroupName
+          }
+        }
+      }
+    }
+  }
+  
+}
+
+query LISTAREGRAS {
+  listRegras{
+    items{
+       regraNome
+      ModelPermissoes{
+        items{
+          modelPermissao{
+            ModelName
+            Permissao
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation CRIAMODELPERMISSAO{
+  UserR: createModelPermissao(input:{ModelName:"UserR",Permissao:R}){
+    ModelName
+    Permissao
+  }
+  
+  UserRW: createModelPermissao(input:{ModelName:"UserRW",Permissao:RW}){
+    ModelName
+    Permissao
+  }
+  
+}
+

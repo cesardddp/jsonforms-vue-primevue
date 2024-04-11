@@ -1,0 +1,116 @@
+query LISTAgrupo{
+  listOrgs{
+    items{
+      cognitoGroupName
+    }
+  }
+}
+
+mutation testa{
+  createGroup(input:{
+    CognitoGroupName:"TesteRESOLVER",
+    Label:"Teste Reoslver"
+  	Description:"Estou testando o resolver"
+    
+  }) {
+    id
+    groupfield_R
+    groupfield_RW
+    orgIdEquipe
+		groupOrgId
+    teste
+  }
+  
+  createAmplifyFormVue(input:{id:"TesteRESOLVER"
+    entity_name:"TesteRESOLVER",tipo:create
+  }){
+    groupfield_R
+    groupfield_RW
+    id
+    tipo
+  }
+  
+  createApi(input:{id:"TesteRESOLVER",tipoApi:GraphQL,nome:"TesteRESOLVER"}){
+    groupfield_R
+    groupfield_RW
+    orgApiId
+  }
+  
+  createAplicacao(input:{id:"TesteRESOLVER",nome:"TesteRESOLVER"}){
+    groupfield_R
+    groupfield_RW
+    id
+    orgAplicacaoId
+  }
+  
+  createCampoFormEstilo(input:{id:"TesteRESOLVER",bs_class_input:"teste",introspection_caminho:"Teste",bs_class_label:"teste",bs_class_wrap:"teste",nao_usar:true,esconder:true}){
+    groupfield_R
+    groupfield_RW
+    orgCampoFormEstiloId
+  }
+  
+  
+  
+  
+}
+mutation deleteAllTestEntities {
+  deleteGroup(input: { CognitoGroupName: "TesteRESOLVER" }) {
+    id
+    CognitoGroupName
+  }
+  deleteAmplifyFormVue(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteApi(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteAplicacao(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteCampoFormEstilo(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteCampo(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteCard(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteEntradaApi(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteEnum(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteEquipeRegras(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteLog(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteMeta(input: { userPoolId: "TesteRESOLVER" }) {
+    userPoolId
+  }
+  deleteModelPermissao(input: { ModelName: "TesteRESOLVER" }) {
+    ModelName
+  }
+  deleteModelsRegras(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteModel(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+  deleteModulo(input: { id: "TesteRESOLVER" }) {
+    id
+  }
+}
+
+
+
+query SchemaQuery{
+  __schema{
+    types{
+      name
+    }
+  }
+}

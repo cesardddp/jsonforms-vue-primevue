@@ -1,0 +1,25 @@
+type Log
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  mensagem: String!
+  nivelEvento: NivelEvento!
+  jobId: String
+  fonteEvento: FonteEvento!
+  fonteCustom: String
+}
+
+enum NivelEvento {
+  debug
+  info
+  warning
+  error
+  success
+}
+
+enum FonteEvento {
+  backend
+  backendApi
+  cognito
+  hosting
+  custom
+}

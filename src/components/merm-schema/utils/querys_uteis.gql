@@ -1,0 +1,2120 @@
+query pega_Todas_As_Equipes_Com_Permissao_Na_Model_Api_ {
+  listModelsRegras(
+    filter: {
+      and: {
+        modelPermissaoModelName: { eq: "ApiRW" }
+        modelPermissaoModelName: { eq: "ApiR" }
+      }
+    }
+  ) {
+    items {
+      regra {
+        equipes {
+          items {
+            groupCognitoGroupName
+          }
+        }
+      }
+    }
+  }
+}
+query pega_Todas_As_Equipes_Com_Permissao_Na_Model_Api_Usando_Get {
+  #só pega de uma Model-Permissao por vez, no exemplo model "Api" permissao "R"
+  getModelPermissao(ModelName: "ApiR") {
+    regras {
+      items {
+        regra {
+          equipes {
+            items {
+              groupCognitoGroupName
+            }
+          }
+        }
+      }
+    }
+  }
+}
+# criar Org Meucpd
+# cria grupo que representa a Org Meucpd
+
+# cria todas as regras prédifinidas
+
+# cria todas as modelPermissoes, pra cada model tem uma modelPermissao R e RW
+
+# conecta as modelPermissoes com as regras criando as ligações na tabela ModelPermissao (manyToMany)
+
+# e por último, liga a equipe admin à todas as regras
+
+#TODAS AS MODELS-PERMISSOES
+# {
+#   "data": {
+#     "listModelPermissaos": {
+#       "items": [
+#         {
+#           "ModelName": "ModelR"
+#         },
+#         {
+#           "ModelName": "MetaRW"
+#         },
+#         {
+#           "ModelName": "ModelPermissaoRW"
+#         },
+#        
+#         {
+#           "ModelName": "SymphoniaR"
+#         },
+#         {
+#           "ModelName": "CampoFormEstiloRW"
+#         },
+#        
+#         {
+#           "ModelName": "RegraRW"
+#         },
+#         {
+#           "ModelName": "CardRW"
+#         },
+#         {
+#           "ModelName": "SymphoniaRW"
+#         },
+#         {
+#           "ModelName": "EntradaApiR"
+#         },
+#         {
+#           "ModelName": "GroupRW"
+#         },
+#         {
+#           "ModelName": "EquipeRegrasR"
+#         },
+#         {
+#           "ModelName": "typeR"
+#         },
+#         {
+#           "ModelName": "ScoreRW"
+#         },
+#         {
+#           "ModelName": "OrgRW"
+#         },
+#         {
+#           "ModelName": "AplicacaoR"
+#         },
+#         {
+#           "ModelName": "RegraR"
+#         },
+#         {
+#           "ModelName": "EnumRW"
+#         },
+#         {
+#           "ModelName": "LogR"
+#         },
+#         {
+#           "ModelName": "ModuloR"
+#         },
+#         {
+#           "ModelName": "CampoRW"
+#         },
+#         {
+#           "ModelName": "TelaR"
+#         },
+#         {
+#           "ModelName": "LogRW"
+#         },
+#         {
+#           "ModelName": "CampoR"
+#         },
+#         {
+#           "ModelName": "EnumR"
+#         },
+#         {
+#           "ModelName": "ModelPermissaoR"
+#         },
+#         {
+#           "ModelName": "AmplifyFormVueRW"
+#         },
+#         {
+#           "ModelName": "GroupR"
+#         },
+#         {
+#           "ModelName": "CardR"
+#         },
+#         {
+#           "ModelName": "typeRW"
+#         },
+#         {
+#           "ModelName": "OrgR"
+#         },
+#         {
+#           "ModelName": "ModuloRW"
+#         },
+#         {
+#           "ModelName": "ApiR"
+#         },
+#         {
+#           "ModelName": "TelaRW"
+#         },
+#         {
+#           "ModelName": "AmplifyFormVueR"
+#         },
+#         {
+#           "ModelName": "ModelRW"
+#         },
+#         {
+#           "ModelName": "ScoreR"
+#         },
+#         {
+#           "ModelName": "CampoFormEstiloR"
+#         },
+#         {
+#           "ModelName": "ApiRW"
+#         },
+#         {
+#           "ModelName": "MetaR"
+#         },
+#         {
+#           "ModelName": "EquipeRegrasRW"
+#         },
+#         {
+#           "ModelName": "AplicacaoRW"
+#         },
+#         {
+#           "ModelName": "EntradaApiRW"
+#         }
+#       ]
+#     }
+#   }
+# }
+
+mutation MOCKALL {
+  createDadosEmpresa(
+    input: {
+      id: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      IE_RG: "0000"
+      RazaoSocial: "MEUCPD_SOLUCOES_TECNOLOGICAS_LTDA"
+      tipo: Revendedor
+      status: ativo
+      NomeFantasia: "VILACLICK"
+      cnpj: "13914933000136"
+      orgDadosEmpresaId: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+    }
+  ) {
+    id
+  }
+  createOrg(
+    input: {
+      id: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      cognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      status: ativo
+      Tipo: Revendedor
+      orgEmpresaInfoId: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+    }
+  ) {
+    id
+  }
+  orggroup: createGroup(
+    input: {
+      CognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      Label: "MeuCPD"
+      groupOrgId: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+    }
+  ) {
+    CognitoGroupName
+  }
+  admin: createGroup(
+    input: {
+      CognitoGroupName: "equipe-fMCPD393-admin"
+      Label: "Admin MCPD"
+      orgIdEquipe: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+    }
+  ) {
+    CognitoGroupName
+  }
+
+  # CRIA REGRAS
+  rootAllVisualizacao: createRegra(
+    input: {
+      regraNome: "rootAllVisualizacao"
+      label: "Todas as Permissões só visualizar"
+      descricao: "Essa regra é uma regra que carrega todas as permissões de visualização nas rotas!"
+    }
+  ) {
+    regraNome
+  }
+  rootAllEdicao: createRegra(
+    input: {
+      regraNome: "rootAllEdicao"
+      label: "Todas as Permissões  editar"
+      descricao: "Essa regra é uma regra que carrega todas as permissões de edição nas rotas!"
+    }
+  ) {
+    regraNome
+  }
+  gestaoAdminClientes: createRegra(
+    input: {
+      regraNome: "gestaoAdminClientes"
+      label: "Gestão de Admins de Clientes"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora administrar seus clientes, como editar informações de clientes , editar senhas de admins, inativar arquivar e etc"
+    }
+  ) {
+    regraNome
+  }
+  gestaoAppsEdicao: createRegra(
+    input: {
+      regraNome: "gestaoAppsEdicao"
+      label: "Gestão de Apps Edição"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora editar seus apps, como editar informações de apps , construir apps, inativar arquivar e etc"
+    }
+  ) {
+    regraNome
+  }
+  gestaoUsuariosEquipesEdicao: createRegra(
+    input: {
+      regraNome: "gestaoUsuariosEquipesEdicao"
+      label: "Gestão de Usuários e Equipes Edição"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora editar seus usuários e equipes, como editar informações de usuários e equipes , excluir equipe, excluir usuario  e etc"
+    }
+  ) {
+    regraNome
+  }
+  gestaoUsuariosEquipesVisualizacao: createRegra(
+    input: {
+      regraNome: "gestaoUsuariosEquipesVisualizacao"
+      label: "Gestão de Usuários e Equipes Visualização"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora visualizar seus usuários e equipes, como visualizar informações de usuários e equipes , visualizar equipe, visualizar usuario  e etc"
+    }
+  ) {
+    regraNome
+  }
+  gestaoStatusClientesEdicao: createRegra(
+    input: {
+      regraNome: "gestaoStatusClientesEdicao"
+      label: "Gestão de Status de Clientes Edição"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora editar seus status de clientes, como editar informações de status de clientes, somente inativar,arquivar,ativar e aprovar"
+    }
+  ) {
+    regraNome
+  }
+  gestaoDadosClientesEdicao: createRegra(
+    input: {
+      regraNome: "gestaoDadosClientesEdicao"
+      label: "Gestão de Dados de Clientes Edição"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora editar seus dados de clientes, como editar informações de dados de clientes"
+    }
+  ) {
+    regraNome
+  }
+
+  gestaoDadosClientesVisualizacao: createRegra(
+    input: {
+      regraNome: "gestaoDadosClientesVisualizacao"
+      label: "Gestão de Dados de Clientes Visualização"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora visualizar seus dados de clientes, como visualizar informações de dados de clientes"
+    }
+  ) {
+    regraNome
+  }
+  gestaoAppsVisualizacao: createRegra(
+    input: {
+      regraNome: "gestaoAppsVisualizacao"
+      label: "Gestão de Apps Visualização"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora visualizar seus apps, como visualizar informações de apps , visualizar apps"
+    }
+  ) {
+    regraNome
+  }
+
+  gestaoNotificacoes: createRegra(
+    input: {
+      regraNome: "gestaoNotificacoes"
+      label: "Gestão de Notificações"
+      descricao: "Essa rota se refere a todas as permissões para uma organização revendedora visualizar suas notificações, como visualizar informações de notificações , visualizar notificações"
+    }
+  ) {
+    regraNome
+  }
+
+  # CRIA MODELS-PERMISSIONS - R e RW pra cada Model
+  ApiR: createModelPermissao(input: { ModelName: "ApiR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  ApiRW: createModelPermissao(input: { ModelName: "ApiRW", Permissao: RW }) {
+    ModelName
+    Permissao
+  }
+  EntradaApiR: createModelPermissao(
+    input: { ModelName: "EntradaApiR", Permissao: R }
+  ) {
+    ModelName
+    Permissao
+  }
+  EntradaApiRW: createModelPermissao(
+    input: { ModelName: "EntradaApiRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  AplicacaoR: createModelPermissao(
+    input: { ModelName: "AplicacaoR", Permissao: R }
+  ) {
+    ModelName
+    Permissao
+  }
+  AplicacaoRW: createModelPermissao(
+    input: { ModelName: "AplicacaoRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  SymphoniaR: createModelPermissao(
+    input: { ModelName: "SymphoniaR", Permissao: R }
+  ) {
+    ModelName
+    Permissao
+  }
+  SymphoniaRW: createModelPermissao(
+    input: { ModelName: "SymphoniaRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  ScoreR: createModelPermissao(input: { ModelName: "ScoreR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  ScoreRW: createModelPermissao(
+    input: { ModelName: "ScoreRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  MetaR: createModelPermissao(input: { ModelName: "MetaR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  MetaRW: createModelPermissao(input: { ModelName: "MetaRW", Permissao: RW }) {
+    ModelName
+    Permissao
+  }
+  OrgR: createModelPermissao(input: { ModelName: "OrgR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  OrgRW: createModelPermissao(input: { ModelName: "OrgRW", Permissao: RW }) {
+    ModelName
+    Permissao
+  }
+  GroupR: createModelPermissao(input: { ModelName: "GroupR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  GroupRW: createModelPermissao(
+    input: { ModelName: "GroupRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  typeR: createModelPermissao(input: { ModelName: "typeR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  typeRW: createModelPermissao(input: { ModelName: "typeRW", Permissao: RW }) {
+    ModelName
+    Permissao
+  }
+  RegraR: createModelPermissao(input: { ModelName: "RegraR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  RegraRW: createModelPermissao(
+    input: { ModelName: "RegraRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  ModelPermissaoR: createModelPermissao(
+    input: { ModelName: "ModelPermissaoR", Permissao: R }
+  ) {
+    ModelName
+    Permissao
+  }
+  ModelPermissaoRW: createModelPermissao(
+    input: { ModelName: "ModelPermissaoRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  LogR: createModelPermissao(input: { ModelName: "LogR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  LogRW: createModelPermissao(input: { ModelName: "LogRW", Permissao: RW }) {
+    ModelName
+    Permissao
+  }
+  ModelR: createModelPermissao(input: { ModelName: "ModelR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  ModelRW: createModelPermissao(
+    input: { ModelName: "ModelRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  ModelsModulosRTRW: createModelPermissao(
+    input: { ModelName: "ModelsModulosRTRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  ModelsModulosRTR: createModelPermissao(
+    input: { ModelName: "ModelsModulosRTR", Permissao: R }
+  ) {
+    ModelName
+    Permissao
+  }
+  CampoR: createModelPermissao(input: { ModelName: "CampoR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  CampoRW: createModelPermissao(
+    input: { ModelName: "CampoRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  EnumR: createModelPermissao(input: { ModelName: "EnumR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  EnumRW: createModelPermissao(input: { ModelName: "EnumRW", Permissao: RW }) {
+    ModelName
+    Permissao
+  }
+  ModuloR: createModelPermissao(input: { ModelName: "ModuloR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  ModuloRW: createModelPermissao(
+    input: { ModelName: "ModuloRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  TelaR: createModelPermissao(input: { ModelName: "TelaR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  TelaRW: createModelPermissao(input: { ModelName: "TelaRW", Permissao: RW }) {
+    ModelName
+    Permissao
+  }
+  CardR: createModelPermissao(input: { ModelName: "CardR", Permissao: R }) {
+    ModelName
+    Permissao
+  }
+  CardRW: createModelPermissao(input: { ModelName: "CardRW", Permissao: RW }) {
+    ModelName
+    Permissao
+  }
+  AmplifyFormVueR: createModelPermissao(
+    input: { ModelName: "AmplifyFormVueR", Permissao: R }
+  ) {
+    ModelName
+    Permissao
+  }
+  AmplifyFormVueRW: createModelPermissao(
+    input: { ModelName: "AmplifyFormVueRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+  
+ 
+
+  EquipeRegrasRW: createModelPermissao(
+    input: { ModelName: "EquipeRegrasRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+
+  EquipeRegrasR: createModelPermissao(
+    input: { ModelName: "EquipeRegrasR", Permissao: R }
+  ) {
+    ModelName
+    Permissao
+  }
+
+  DadosEmpresaR: createModelPermissao(
+    input: { ModelName: "DadosEmpresaR", Permissao: R }
+  ) {
+    ModelName
+    Permissao
+  }
+
+  DadosEmpresaRW: createModelPermissao(
+    input: { ModelName: "DadosEmpresaRW", Permissao: RW }
+  ) {
+    ModelName
+    Permissao
+  }
+
+  GridR: createModelPermissao(input: { ModelName: "GridR", Permissao: R }){
+    ModelName
+    Permissao
+  }
+
+  GridRW: createModelPermissao(input: { ModelName: "GridRW", Permissao: RW }){
+    ModelName
+    Permissao
+  }
+
+  # LIGAS AS REGRAS COM AS MODEL-PERMISSIONS
+
+  # gestaoAppsEdicao
+  #|-> ApiRW
+  #|-> AplicacaoRW
+  #|-> CampoFormEstiloRW
+  #|-> CampoRW
+  #|-> CardRW
+  #|-> GridRW
+  #|-> EntradaApiRW
+  #|-> EnumRW
+  #|-> GroupR
+  #|-> ModelRW
+  #|-> ModuloRW
+  #|-> OrgR
+  #|-> ScoreRW
+  #|-> SymphoniaRW
+  #|-> TelaRW
+
+
+
+  
+
+  gestaoAppsEdicaoApiRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "ApiRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoAplicacaoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "AplicacaoRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoCampoFormEstiloRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "CampoFormEstiloRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoCampoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "CampoRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoCardRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "CardRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoGridRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "GridRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoEntradaApiRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "EntradaApiRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoEnumRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "EnumRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoGroupR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "GroupR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoModelRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "ModelRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoModuloRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "ModuloRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoOrgR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "OrgR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoScoreRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "ScoreRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoSymphoniaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "SymphoniaRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoTelaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "TelaRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsEdicaoModelsModulosRTRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsEdicao"
+      modelPermissaoModelName: "ModelsModulosRTRW"
+    }
+  ) {
+    id
+  }
+
+
+
+  #gestaoAppsVisualizacao
+  #|-> ApiR
+  #|-> AplicacaoR
+  #|-> CampoFormEstiloR
+  #|-> CampoR
+  #|-> CardR
+  #|-> GridR
+  #|-> EntradaApiR
+  #|-> EnumR
+  #|-> GroupR
+  #|-> ModelR
+  #|-> ModuloR
+  #|-> OrgR
+  #|-> ScoreR
+  #|-> SymphoniaR
+  #|-> TelaR
+
+  gestaoAppsVisualizacaoApiR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "ApiR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoAplicacaoR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "AplicacaoR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoCampoFormEstiloR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "CampoFormEstiloR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoCampoR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "CampoR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoCardR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "CardR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoGridR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "GridR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoEntradaApiR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "EntradaApiR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoEnumR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "EnumR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoGroupR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "GroupR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoModelR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "ModelR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoModuloR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "ModuloR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoOrgR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "OrgR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoScoreR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "ScoreR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoSymphoniaR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "SymphoniaR"
+    }
+  ) {
+    id
+  }
+
+ 
+  gestaoAppsVisualizacaoTelaR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "TelaR"
+    }
+  ) {
+    id
+  }
+
+  gestaoAppsVisualizacaoModelsModulosRTR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAppsVisualizacao"
+      modelPermissaoModelName: "ModelsModulosRTR"
+    }
+  ) {
+    id
+  }
+
+  #gestaoDadosClientesEdicao
+  #|-> DadosEmpresaRW
+  #|-> OrgR
+
+  gestaoDadosClientesEdicaoDadosEmpresaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoDadosClientesEdicao"
+      modelPermissaoModelName: "DadosEmpresaRW"
+    }
+  ) {
+    id
+  }
+
+  #gestaoDadosClientesVisualizacao
+
+  #|-> DadosEmpresaR
+  #|-> OrgR
+
+  gestaoDadosClientesVisualizacaoDadosEmpresaR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoDadosClientesVisualizacao"
+      modelPermissaoModelName: "DadosEmpresaR"
+    }
+  ) {
+    id
+  }
+
+  #gestaoUsuariosEquipesEdicao
+
+  #|-> GroupRW
+  #|-> OrgR
+
+  gestaoUsuariosEquipesEdicaoGroupRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoUsuariosEquipesEdicao"
+      modelPermissaoModelName: "GroupRW"
+    }
+  ) {
+    id
+  }
+
+  gestaoUsuariosEquipesEdicaoOrgR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoUsuariosEquipesEdicao"
+      modelPermissaoModelName: "OrgR"
+    }
+  ) {
+    id
+  }
+
+  #gestaoUsuariosEquipesVisualizacao
+
+  #|-> GroupR
+  #|-> OrgR
+
+  gestaoUsuariosEquipesVisualizacaoGroupR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoUsuariosEquipesVisualizacao"
+      modelPermissaoModelName: "GroupR"
+    }
+  ) {
+    id
+  }
+
+  gestaoUsuariosEquipesVisualizacaoOrgR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoUsuariosEquipesVisualizacao"
+      modelPermissaoModelName: "OrgR"
+    }
+  ) {
+    id
+  }
+
+  #gestaoAdminClientes
+  #|-> OrgR
+
+  gestaoAdminClientesOrgR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAdminClientes"
+      modelPermissaoModelName: "OrgR"
+    }
+  ) {
+    id
+  }
+
+  #gestaoAdminClientes
+  #|-> DadosEmpresaRW
+
+  gestaoAdminClientesDadosEmpresaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoAdminClientes"
+      modelPermissaoModelName: "DadosEmpresaRW"
+    }
+  ) {
+    id
+  }
+
+  #gestaoStatusClientesEdicao
+  #|-> OrgR
+
+  gestaoStatusClientesEdicaoOrgR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoStatusClientesEdicao"
+      modelPermissaoModelName: "OrgR"
+    }
+  ) {
+    id
+  }
+
+  #gestaoNotificacoes
+  #|-> OrgR
+  #|-> LogR
+  #!-> LogRW
+
+
+
+  gestaoNotificacoesOrgR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoNotificacoes"
+      modelPermissaoModelName: "OrgR"
+    }
+  ) {
+    id
+  }
+
+  gestaoNotificacoesLogR: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoNotificacoes"
+      modelPermissaoModelName: "LogR"
+    }
+  ) {
+    id
+  }
+
+  gestaoNotificacoesLogRW: createModelsRegras(
+    input: {
+      regraRegraNome: "gestaoNotificacoes"
+      modelPermissaoModelName: "LogRW"
+    }
+  ) {
+    id
+  }
+
+
+  #definindo rootAll que vai ligar a todas as modelPermissiao
+
+  rootAllVisualizacaoGridR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "GridR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoOrgR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "OrgR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoOrgRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "OrgRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoLogR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "LogR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoLogRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "LogRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoGroupR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "GroupR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoGroupRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "GroupRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoPoliticaAcessoR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "PoliticaAcessoR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoPoliticaAcessoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "PoliticaAcessoRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoRegraR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "RegraR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoRegraRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "RegraRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoModelPermissaoR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ModelPermissaoR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoModelPermissaoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ModelPermissaoRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoEquipeRegrasR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "EquipeRegrasR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoEquipeRegrasRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "EquipeRegrasRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoEquipeR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "EquipeR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoEquipeRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "EquipeRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoModelR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ModelR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoModelRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ModelRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoModuloR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ModuloR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoModuloRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ModuloRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoTelaR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "TelaR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoTelaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "TelaRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoCardR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "CardR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoCardRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "CardRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoCampoR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "CampoR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoCampoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "CampoRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoCampoFormEstiloR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "CampoFormEstiloR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoCampoFormEstiloRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "CampoFormEstiloRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoEnumR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "EnumR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoEnumRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "EnumRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoAplicacaoR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "AplicacaoR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoAplicacaoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "AplicacaoRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoApiR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ApiR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoApiRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ApiRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoEntradaApiR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "EntradaApiR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoEntradaApiRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "EntradaApiRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoScoreR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ScoreR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoScoreRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "ScoreRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoSymphoniaR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "SymphoniaR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoSymphoniaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "SymphoniaRW"
+    }
+  ) {
+    id
+  }
+
+
+  rootAllVisualizacaoAmplifyFormVueR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "AmplifyFormVueR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoAmplifyFormVueRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "AmplifyFormVueRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoDadosEmpresaR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "DadosEmpresaR"
+    }
+  ) {
+    id
+  }
+
+  rootAllVisualizacaoDadosEmpresaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllVisualizacao"
+      modelPermissaoModelName: "DadosEmpresaRW"
+    }
+  ) {
+    id
+  }
+
+
+  rootAllEdicaoGridRW: createModelsRegras(
+    input: { regraRegraNome: "rootAllEdicao", modelPermissaoModelName: "GridRW" }
+  ) {
+    id
+  }
+
+  rootAllEdicaoOrgRW: createModelsRegras(
+    input: { regraRegraNome: "rootAllEdicao", modelPermissaoModelName: "OrgRW" }
+  ) {
+    id
+  }
+
+  rootAllEdicaoLogRW: createModelsRegras(
+    input: { regraRegraNome: "rootAllEdicao", modelPermissaoModelName: "LogRW" }
+  ) {
+    id
+  }
+
+  rootAllEdicaoGroupRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "GroupRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoPoliticaAcessoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "PoliticaAcessoRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoRegraRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "RegraRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoModelPermissaoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "ModelPermissaoRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoEquipeRegrasRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "EquipeRegrasRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoEquipeRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "EquipeRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoModelRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "ModelRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoModuloRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "ModuloRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoTelaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "TelaRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoCardRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "CardRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoCampoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "CampoRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoCampoFormEstiloRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "CampoFormEstiloRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoEnumRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "EnumRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoAplicacaoRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "AplicacaoRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoApiRW: createModelsRegras(
+    input: { regraRegraNome: "rootAllEdicao", modelPermissaoModelName: "ApiRW" }
+  ) {
+    id
+  }
+
+  rootAllEdicaoEntradaApiRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "EntradaApiRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoScoreRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "ScoreRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoSymphoniaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "SymphoniaRW"
+    }
+  ) {
+    id
+  }
+
+
+  rootAllEdicaoAmplifyFormVueRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "AmplifyFormVueRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoDadosEmpresaRW: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "DadosEmpresaRW"
+    }
+  ) {
+    id
+  }
+
+  rootAllEdicaoDadosEmpresaR: createModelsRegras(
+    input: {
+      regraRegraNome: "rootAllEdicao"
+      modelPermissaoModelName: "DadosEmpresaR"
+    }
+  ) {
+    id
+  }
+
+  # LIGA ADMIN À TODAS AS REGRAS
+  admingestaoAppsEdicao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoAppsEdicao"
+    }
+  ) {
+    id
+  }
+
+  admingestaoAppsVisualizacao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoAppsVisualizacao"
+    }
+  ) {
+    id
+  }
+
+  admingestaoDadosClientesEdicao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoDadosClientesEdicao"
+    }
+  ) {
+    id
+  }
+
+  admingestaoDadosClientesVisualizacao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoDadosClientesVisualizacao"
+    }
+  ) {
+    id
+  }
+
+  admingestaoUsuariosEquipesEdicao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoUsuariosEquipesEdicao"
+    }
+  ) {
+    id
+  }
+
+  admingestaoUsuariosEquipesVisualizacao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoUsuariosEquipesVisualizacao"
+    }
+  ) {
+    id
+  }
+
+  admingestaoAdminClientes: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoAdminClientes"
+    }
+  ) {
+    id
+  }
+
+  admingestaoStatusClientesEdicao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoStatusClientesEdicao"
+    }
+  ) {
+    id
+  }
+
+  adminrootAllVisualizacao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "rootAllVisualizacao"
+    }
+  ) {
+    id
+  }
+
+  adminrootAllEdicao: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "rootAllEdicao"
+    }
+  ) {
+    id
+  }
+
+  admingestaoNotificacoes: createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "equipe-fMCPD393-admin"
+      regraRegraNome: "gestaoNotificacoes"
+    }
+  ) {
+    id
+  }
+}
+
+query listMordelPermissoes {
+  listModelPermissaos {
+    items {
+      ModelName
+      Permissao
+      regras {
+        items {
+          regraRegraNome
+        }
+      }
+    }
+  }
+}
+
+mutation APAGATODASASREGRAS {
+  gestaoAppsEdicao: deleteRegra(input: { regraNome: "gestaoAppsEdicao" }) {
+    regraNome
+  }
+  gestaoAppsVisualizacao: deleteRegra(
+    input: { regraNome: "gestaoAppsVisualizacao" }
+  ) {
+    regraNome
+  }
+  gestaoDadosClientesEdicao: deleteRegra(
+    input: { regraNome: "gestaoDadosClientesEdicao" }
+  ) {
+    regraNome
+  }
+  gestaoDadosClientesVisualizacao: deleteRegra(
+    input: { regraNome: "gestaoDadosClientesVisualizacao" }
+  ) {
+    regraNome
+  }
+  gestaoUsuariosEquipesEdicao: deleteRegra(
+    input: { regraNome: "gestaoUsuariosEquipesEdicao" }
+  ) {
+    regraNome
+  }
+
+  gestaoUsuariosEquipesVisualizacao: deleteRegra(
+    input: { regraNome: "gestaoUsuariosEquipesVisualizacao" }
+  ) {
+    regraNome
+  }
+
+  gestaoAdminClientes: deleteRegra(
+    input: { regraNome: "gestaoAdminClientes" }
+  ) {
+    regraNome
+  }
+
+  gestaoStatusClientesEdicao: deleteRegra(
+    input: { regraNome: "gestaoStatusClientesEdicao" }
+  ) {
+    regraNome
+  }
+
+  rootAllVisualizacao: deleteRegra(
+    input: { regraNome: "rootAllVisualizacao" }
+  ) {
+    regraNome
+  }
+
+  #adicionando items antigos
+  #   "items": [
+  #         {
+  #           "regraNome": "rootAllEdicao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoClientesEdicao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoAppsEdicao"
+  #         },
+  #         {
+  #           "regraNome": "rootAllVisualizacao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoEquipeEdicao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoClientesVisualizacao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoEquipeVisualizacao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoUsuariosEdicao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoOrgVisualizacao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoAppsVisualizacao"
+  #         },
+  #         {
+  #           "regraNome": "gestaoOrgEdicao"
+  #         }
+  #       ]
+  #     }
+  #   }
+  # }
+
+  rootAllEdicao: deleteRegra(input: { regraNome: "rootAllEdicao" }) {
+    regraNome
+  }
+
+  gestaoClientesEdicao: deleteRegra(
+    input: { regraNome: "gestaoClientesEdicao" }
+  ) {
+    regraNome
+  }
+
+  gestaoAppsEdicao: deleteRegra(input: { regraNome: "gestaoAppsEdicao" }) {
+    regraNome
+  }
+
+  rootAllVisualizacao: deleteRegra(
+    input: { regraNome: "rootAllVisualizacao" }
+  ) {
+    regraNome
+  }
+
+  gestaoEquipeEdicao: deleteRegra(input: { regraNome: "gestaoEquipeEdicao" }) {
+    regraNome
+  }
+
+  gestaoClientesVisualizacao: deleteRegra(
+    input: { regraNome: "gestaoClientesVisualizacao" }
+  ) {
+    regraNome
+  }
+
+  gestaoEquipeVisualizacao: deleteRegra(
+    input: { regraNome: "gestaoEquipeVisualizacao" }
+  ) {
+    regraNome
+  }
+
+  gestaoUsuariosEdicao: deleteRegra(
+    input: { regraNome: "gestaoUsuariosEdicao" }
+  ) {
+    regraNome
+  }
+
+  gestaoOrgVisualizacao: deleteRegra(
+    input: { regraNome: "gestaoOrgVisualizacao" }
+  ) {
+    regraNome
+  }
+
+  gestaoAppsVisualizacao: deleteRegra(
+    input: { regraNome: "gestaoAppsVisualizacao" }
+  ) {
+    regraNome
+  }
+
+  gestaoOrgEdicao: deleteRegra(input: { regraNome: "gestaoOrgEdicao" }) {
+    regraNome
+  }
+
+  gestaoNotificacoes: deleteRegra(input: { regraNome: "gestaoNotificacoes" }) {
+    regraNome
+  }
+
+}
+
+mutation ASSOCIAREGRAAEQUIPE {
+  createEquipeRegras(
+    input: {
+      groupCognitoGroupName: "GRUPODETESTEDOLEO"
+      regraRegraNome: "gestaoOrgVisualizacao"
+    }
+  ) {
+    id
+    groupCognitoGroupName
+    regraRegraNome
+  }
+}
+
+mutation DESASSOCIAREGRA {
+  deleteEquipeRegras(input: { id: "f3be5393-2b44-45e2-ae53-ae58810cbe0b" }) {
+    id
+    groupCognitoGroupName
+    regraRegraNome
+  }
+}
+
+query LISTAREGRAS {
+  listRegras {
+    items {
+      regraNome
+      equipes {
+        items {
+          id
+        }
+        nextToken
+      }
+      ModelPermissoes {
+        items {
+          id
+
+          modelPermissao {
+            ModelName
+            Permissao
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation ALTERAESPECIFICGROUP {
+  updateGroup(
+    input: {
+      CognitoGroupName: "GRUPODETESTEDOLEO"
+      regrasAnteriores: [gestaoAppsVisualizacao]
+    }
+  ) {
+    CognitoGroupName
+    regrasAnteriores
+    regraImplementadaAt
+  }
+}
+
+query GETESPECIFIQGROUP {
+  getGroup(CognitoGroupName: "GRUPODETESTEDOLEO") {
+    CognitoGroupName
+    Description
+    orgIdEquipe
+    groupOrgId
+    regrasAnteriores
+    regraImplementadaAt
+
+    regras {
+      items {
+        groupCognitoGroupName
+        regraRegraNome
+        id
+
+        regra {
+          ModelPermissoes {
+            items {
+              modelPermissao {
+                ModelName
+                Permissao
+              }
+            }
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+
+mutation APAGAGRUPO {
+  deleteGroup(
+    input: {
+      CognitoGroupName: "orggroup-fMCPD393-44495447-e224-4403-adeb-568bc6917220"
+    }
+  ) {
+    id
+  }
+}
+
+query LISTAGRUPOS {
+  listGroups {
+    items {
+      id
+      CognitoGroupName
+      Label
+      orgIdEquipe
+      groupOrgId
+    }
+  }
+}
+
+query LISTAORGS {
+  listOrgs {
+    items {
+      id
+      cnpj
+      RazaoSocial
+      cognitoGroupName
+    }
+  }
+}
+
+subscription TESTASUB {
+  onCreateLog {
+    mensagem
+  }
+}
+
+mutation APAGAGRUPO {
+  deleteGroup(
+    input: { CognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0" }
+  ) {
+    id
+  }
+}
+
+mutation UPDATEGRUPO {
+  updateGroup(
+    input: {
+      CognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      groupOrgId: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+    }
+  ) {
+    id
+  }
+}
+
+mutation DELETEORG {
+  deleteOrg(input: { id: "6b80c62d-41b1-4bd4-9bd0-dc4e83cf4bf1" }) {
+    id
+  }
+}
+
+mutation CREATEORG {
+  createOrg(
+    input: {
+      id: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      RazaoSocial: "MEUCPD_SOLUCOES_TECNOLOGICAS"
+      NomeFantasia: "Vila_CLICK"
+      Tipo: Revendedor
+      cnpj: "00000"
+      cognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      IE_RG: "0000"
+    }
+  ) {
+    id
+  }
+}
+
+mutation UPDATEORG {
+  updateOrg(
+    input: {
+      id: "fMCPD393-2b44-45e2-ae53-ae58810cbe"
+      cognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+    }
+  ) {
+    id
+  }
+}
+
+mutation CRIAGRUPO {
+  createGroup(
+    input: {
+      id: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      CognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+      Label: "MEUCPD"
+    }
+  ) {
+    id
+    CognitoGroupName
+  }
+}

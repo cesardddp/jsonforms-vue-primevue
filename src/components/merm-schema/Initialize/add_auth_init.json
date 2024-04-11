@@ -1,0 +1,43 @@
+{
+    "version": 2,
+    "resourceName": "cledfrontend66666fea66666fea",
+    "serviceConfiguration": {
+      "serviceName": "Cognito",
+      "userPoolConfiguration": {
+        "signinMethod": "EMAIL",
+        "requiredSignupAttributes": [
+          "EMAIL"
+        ],
+        "aliasAttributes": [
+          "EMAIL"
+        ],
+        "userPoolName": "cledfr66666fea_userpool_66666fea",
+        "userPoolGroups": [],
+        "adminQueries": {
+          "permissions": {
+            "restrictAccess": false
+          }
+        },
+        "mfa": {
+          "mode": "OFF"
+        },
+        "passwordPolicy": {
+          "minimumLength": 8,
+          "additionalConstraints": [
+            "REQUIRE_LOWERCASE",
+            "REQUIRE_UPPERCASE",
+            "REQUIRE_DIGIT",
+            "REQUIRE_SYMBOL"
+          ]
+        },
+        "refreshTokenPeriod": 30,
+        "readAttributes": [
+          "EMAIL"
+        ],
+        "writeAttributes": [
+          "EMAIL"
+        ]
+      },
+      "includeIdentityPool": false
+    }
+  }

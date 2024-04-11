@@ -1,0 +1,152 @@
+mutation MyMutation {
+  createApp(
+    input: {
+      nome: "mermadmin"
+      grupos: ["MeuCPD", "Usuarios"]
+      ambiente: dev
+      nav_bar: {
+        brand: {
+          height: null
+          imagem_logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpZjaylmkLE-zx8i-woTHEO0nEsJU7MloIasVsOkcUQ&s"
+          is_home: true
+          width: null
+        }
+        nav_bar_opcoes: {
+          imagem_avatar: ""
+          drop_down_menu: [{ nome: "Perfil", href: "/perfil" }]
+        }
+      }
+      meta: {
+        app_name: "mermadmin"
+        BackendEnvironmentName: "dev"
+        BackendEnvironmentNameApp: "mermadmin-dev"
+      }
+      login: {
+        form_login: {
+          background_color_theme: bg_dark
+          footer: {
+            link: "meucpd.com.br"
+            sing_up_mensagem: "Não tem uma conta?"
+          }
+          cor_primaria: "#4d4e9b"
+          cor_secundaria: "#6b6ccf"
+          cor_terciaria: "#333464"
+          logos: [
+            {
+              imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpZjaylmkLE-zx8i-woTHEO0nEsJU7MloIasVsOkcUQ&s"
+              legenda: "MeuCPD Soluções Tecnólogicas"
+            }
+            { imagem: "favicon.png", legenda: "MERM Melhor ERP do Mundo!" }
+          ]
+        }
+      }
+    }
+  ) {
+    id
+  }
+}
+query listar_modulos {
+  listModulos {
+    items {
+      id
+    }
+  }
+}
+mutation cria_tabela_list_apps {
+  createTela(
+    input: {
+      nome: "mermadmin"
+      grupos: ["MeuCPD", "Usuarios"]
+      ambiente: dev
+      nav_bar: {
+        brand: {
+          height: null
+          imagem_logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpZjaylmkLE-zx8i-woTHEO0nEsJU7MloIasVsOkcUQ&s"
+          is_home: true
+          width: null
+        }
+        nav_bar_opcoes: {
+          imagem_avatar: ""
+          drop_down_menu: [{ nome: "Perfil", href: "/perfil" }]
+        }
+      }
+      meta: {
+        app_name: "mermadmin"
+        BackendEnvironmentName: "dev"
+        BackendEnvironmentNameApp: "mermadmin-dev"
+      }
+      login: {
+        form_login: {
+          background_color_theme: bg_dark
+          footer: {
+            link: "meucpd.com.br"
+            sing_up_mensagem: "Não tem uma conta?"
+          }
+          cor_primaria: "#4d4e9b"
+          cor_secundaria: "#6b6ccf"
+          cor_terciaria: "#333464"
+          logos: [
+            {
+              imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpZjaylmkLE-zx8i-woTHEO0nEsJU7MloIasVsOkcUQ&s"
+              legenda: "MeuCPD Soluções Tecnólogicas"
+            }
+            { imagem: "favicon.png", legenda: "MERM Melhor ERP do Mundo!" }
+          ]
+        }
+      }
+    }
+  ) {
+    id
+  }
+}
+# execucao 11:40 15/05
+#  {
+#   "data": {
+#     "createTela": {
+#       "id": "110ab478-43d7-414c-bd27-bfc1a02e9ed1"
+#     }
+#   }
+# }
+#  list telas
+query listar_telas {
+  listTelas {
+    items {
+      id
+      nome
+      tipo
+      models
+      tabela {
+        colunas {
+          nome
+          label
+          tamanho
+          posicao
+          editavel
+          listavel
+          visivel
+          formType
+          mascara
+          descricao
+        }
+        opcoes {
+          dialog_header {
+            addingTitulo
+            beginEditTitulo
+          }
+          paginacaoOpcoes {
+            allowPaging
+            pageSettings {
+              pageSize
+            }
+          }
+        }
+      }
+    }
+  }
+}
+# delete tela
+mutation delete_tela {
+  deleteTela(input: { id: "02ded889-f9bd-444d-b765-fa34f27e64b7" }) {
+    id
+  }
+}

@@ -8,12 +8,13 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
   plugins: [vue(), dts(
     {
+      rollupTypes: true 
       // copyDtsFiles: true,
-      outDir: [
-        'dist',
-        // 'types'
-        // 'types/inner'
-      ],
+      // outDir: [
+      //   'dist',
+      //   // 'types'
+      //   // 'types/inner'
+      // ],
       // compilerOptions: {
       //   declarationMap: true
       // },
@@ -24,8 +25,9 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: 'jsonforms-vue-primevue',
-      fileName: (format: any) => `jsonforms-vue-primevue.${format}.ts`,
-      formats: ['es'],
+      // fileName: (format: any) => `jsonforms-vue-primevue.${format}.ts`,
+      fileName: (format) => `jsonforms-vue-primevue.${format}.js`,
+      formats: ['es','umd','cjs'],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

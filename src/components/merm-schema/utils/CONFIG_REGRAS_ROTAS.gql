@@ -1,0 +1,1082 @@
+mutation createOrg($input: CreateOrgInput!) {
+  createOrg(input: $input) {
+    id
+  }
+}
+
+query LISTAGRUPOS {
+  listGroups(limit: 10000, filter: {CognitoGroupName: {beginsWith: "equipe-79b4f5fe-admin"}}) {
+    items {
+      id
+      CognitoGroupName
+      Label
+      orgIdEquipe
+      groupOrgId
+      regras {
+        items {
+          regraRegraNome
+        }
+      }
+    }
+  }
+}
+
+query LISTAORGS {
+  listOrgs {
+    items {
+      id
+    }
+  }
+}
+
+subscription TESTASUB {
+  onCreateLog {
+    mensagem
+  }
+}
+
+mutation APAGAGRUPO {
+  deleteGroup(input: {CognitoGroupName: "equipe-79b4f5fe-admin"}) {
+    id
+  }
+}
+
+mutation UPDATEGRUPO {
+  updateGroup(input: {CognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0", groupOrgId: "fMCPD393-2b44-45e2-ae53-ae58810cbe0"}) {
+    id
+  }
+}
+
+mutation DELETEORG {
+  deleteOrg(input: {id: "aaa"}) {
+    id
+    status
+  }
+}
+
+mutation CREATEORG {
+  createOrg(input: {id: "aaa", RazaoSocial: "MEUCPD_SOLUCOES_TECNOLOGICAS", NomeFantasia: "Vila_CLICK", Tipo: Revendedor, cnpj: "00000", cognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0", IE_RG: "0000"}) {
+    id
+  }
+}
+
+mutation UPDATEORG {
+  updateOrg(input: {id: "79b4f5fe-b662-4615-8eae-c380d37e69d7", status: false}) {
+    id
+  }
+}
+
+mutation CRIAGRUPO {
+  createGroup(input: {id: "fMCPD393-2b44-45e2-ae53-ae58810cbe0", CognitoGroupName: "orggroup-fMCPD393-2b44-45e2-ae53-ae58810cbe0", Label: "MEUCPD"}) {
+    id
+    CognitoGroupName
+  }
+}
+
+mutation COGNITOAPIINPUT{
+  createApiREST(input:{
+    id:"cognitoApi"
+    nome:"cognitoApi"
+    url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev"
+  	orgApirestId:"fMCPD393-2b44-45e2-ae53-ae58810cbe0"
+  }){
+    id
+  }
+  
+  #criando rotas
+   #/cognito/listGroupsFromOrg
+   # [["gestaoUsuariosEquipesVisualizacao", "gestaoUsuariosEquipesEdicao"], ["gestaoOrgVisualizacao", "gestaoAdminClientes"]]
+  _cognito_listGroupsFromOrg: createRota(input:{
+    id:"/cognito/listGroupsFromOrg",
+    nome:"/cognito/listGroupsFromOrg",
+    url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listGroupsFromOrg",
+    descricao:"",
+    apiRESTRotasId:"cognitoApi"
+    
+  }){
+    id
+    nome
+  }
+  
+  _cognito_listGroupsFromOrg_RegraListRota1: createRegraListRota(input:{
+    id:"_cognito_listGroupsFromOrg_RegraListRota1",
+     rotaRegraslistId:"/cognito/listGroupsFromOrg"
+  }){
+    id
+  }
+
+  _cognito_listGroupsFromOrg_RegraListRota2: createRegraListRota(input:{
+    id:"_cognito_listGroupsFromOrg_RegraListRota2",
+     rotaRegraslistId:"/cognito/listGroupsFromOrg"
+  }){
+    id
+  }
+
+  _cognito_listGroupsFromOrg_RegraListRota1_Regras1: createRotaRegras(input:{
+    regraRegraNome:"gestaoUsuariosEquipesVisualizacao"
+    regraListRotaId:"_cognito_listGroupsFromOrg_RegraListRota1"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+
+  _cognito_listGroupsFromOrg_RegraListRota1_Regras2: createRotaRegras(input:{
+    regraRegraNome:"gestaoUsuariosEquipesEdicao"
+    regraListRotaId:"_cognito_listGroupsFromOrg_RegraListRota1"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+
+  _cognito_listGroupsFromOrg_RegraListRota2_Regras1: createRotaRegras(input:{
+    regraRegraNome:"gestaoOrgVisualizacao"
+    regraListRotaId:"_cognito_listGroupsFromOrg_RegraListRota2"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+
+  _cognito_listGroupsFromOrg_RegraListRota2_Regras2: createRotaRegras(input:{
+    regraRegraNome:"gestaoAdminClientes"
+    regraListRotaId:"_cognito_listGroupsFromOrg_RegraListRota2"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+
+  #/cognito/deleteEquipe
+  #[["gestaoUsuariosEquipesEdicao"]]
+
+  _cognito_deleteEquipe: createRota(input:{
+    id:"/cognito/deleteEquipe",
+    nome:"/cognito/deleteEquipe",
+    url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/deleteEquipe",
+    descricao:"",
+    apiRESTRotasId:"cognitoApi"
+    
+  }){
+    id
+    nome
+  }
+
+  _cognito_deleteEquipe_RegraListRota1: createRegraListRota(input:{
+    id:"_cognito_deleteEquipe_RegraListRota1",
+     rotaRegraslistId:"/cognito/deleteEquipe"
+  }){
+    id
+  }
+
+  _cognito_deleteEquipe_RegraListRota1_Regras1: createRotaRegras(input:{
+    regraRegraNome:"gestaoUsuariosEquipesEdicao"
+    regraListRotaId:"_cognito_deleteEquipe_RegraListRota1"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+
+  #/cognito/createEquipe
+  #[["gestaoUsuariosEquipesEdicao"]]
+
+  _cognito_createEquipe: createRota(input:{
+    id:"/cognito/createEquipe",
+    nome:"/cognito/createEquipe",
+    url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/createEquipe",
+    descricao:"",
+    apiRESTRotasId:"cognitoApi"
+    
+  }){
+    id
+    nome
+  }
+
+  _cognito_createEquipe_RegraListRota1: createRegraListRota(input:{
+    id:"_cognito_createEquipe_RegraListRota1",
+     rotaRegraslistId:"/cognito/createEquipe"
+  }){
+    id
+  }
+
+  _cognito_createEquipe_RegraListRota1_Regras1: createRotaRegras(input:{
+    regraRegraNome:"gestaoUsuariosEquipesEdicao"
+    regraListRotaId:"_cognito_createEquipe_RegraListRota1"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+
+  #/cognito/listGroupsForUser
+  #[["gestaoUsuariosEquipesVisualizacao","gestaoUsuariosEquipesEdicao"]]
+
+  _cognito_listGroupsForUser: createRota(input:{
+    id:"/cognito/listGroupsForUser",
+    nome:"/cognito/listGroupsForUser",
+    url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listGroupsForUser",
+    descricao:"",
+    apiRESTRotasId:"cognitoApi"
+    
+  }){
+    id
+    nome
+  }
+
+  _cognito_listGroupsForUser_RegraListRota1: createRegraListRota(input:{
+    id:"_cognito_listGroupsForUser_RegraListRota1",
+     rotaRegraslistId:"/cognito/listGroupsForUser"
+  }){
+    id
+  }
+
+  _cognito_listGroupsForUser_RegraListRota1_Regras1: createRotaRegras(input:{
+    regraRegraNome:"gestaoUsuariosEquipesVisualizacao"
+    regraListRotaId:"_cognito_listGroupsForUser_RegraListRota1"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+
+  _cognito_listGroupsForUser_RegraListRota1_Regras2: createRotaRegras(input:{
+    regraRegraNome:"gestaoUsuariosEquipesEdicao"
+    regraListRotaId:"_cognito_listGroupsForUser_RegraListRota1"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+
+  #/cognito/changeUserEquipe
+  #[["gestaoUsuariosEquipesEdicao"]]
+
+  _cognito_changeUserEquipe: createRota(input:{
+    id:"/cognito/changeUserEquipe",
+    nome:"/cognito/changeUserEquipe",
+    url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/changeUserEquipe",
+    descricao:"",
+    apiRESTRotasId:"cognitoApi"
+    
+  }){
+    id
+    nome
+  }
+
+  _cognito_changeUserEquipe_RegraListRota1: createRegraListRota(input:{
+    id:"_cognito_changeUserEquipe_RegraListRota1",
+     rotaRegraslistId:"/cognito/changeUserEquipe"
+  }){
+    id
+  }
+
+  _cognito_changeUserEquipe_RegraListRota1_Regras1: createRotaRegras(input:{
+    regraRegraNome:"gestaoUsuariosEquipesEdicao"
+    regraListRotaId:"_cognito_changeUserEquipe_RegraListRota1"
+  }){
+    id
+    regraRegraNome
+    regraListRotaId
+  }
+ 
+  #/cognito/listUsersInGroup
+  #[["gestaoUsuariosEquipesVisualizacao","gestaoUsuariosEquipesEdicao"]]
+
+
+
+
+
+_cognito_listUsersInGroup: createRota(input:{
+  id:"/cognito/listUsersInGroup",
+  nome:"/cognito/listUsersInGroup",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listUsersInGroup",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_listUsersInGroup_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_listUsersInGroup_RegraListRota1",
+  rotaRegraslistId:"/cognito/listUsersInGroup"
+}){
+  id
+}
+
+_cognito_listUsersInGroup_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesVisualizacao",
+  regraListRotaId:"_cognito_listUsersInGroup_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+_cognito_listUsersInGroup_RegraListRota1_Regras2: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_listUsersInGroup_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+ # /cognito/disableUser
+# [["gestaoUsuariosEquipesEdicao"]]
+
+_cognito_disableUser: createRota(input:{
+  id:"/cognito/disableUser",
+  nome:"/cognito/disableUser",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/disableUser",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_disableUser_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_disableUser_RegraListRota1",
+  rotaRegraslistId:"/cognito/disableUser"
+}){
+  id
+}
+
+_cognito_disableUser_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_disableUser_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/enableUser
+# [["gestaoUsuariosEquipesEdicao"]]
+
+_cognito_enableUser: createRota(input:{
+  id:"/cognito/enableUser",
+  nome:"/cognito/enableUser",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/enableUser",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_enableUser_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_enableUser_RegraListRota1",
+  rotaRegraslistId:"/cognito/enableUser"
+}){
+  id
+}
+
+_cognito_enableUser_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_enableUser_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/createUser
+# [["gestaoUsuariosEquipesEdicao"]]
+
+_cognito_createUser: createRota(input:{
+  id:"/cognito/createUser",
+  nome:"/cognito/createUser",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/createUser",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_createUser_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_createUser_RegraListRota1",
+  rotaRegraslistId:"/cognito/createUser"
+}){
+  id
+}
+
+_cognito_createUser_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_createUser_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/updateUser
+# [["gestaoUsuariosEquipesEdicao"]]
+
+_cognito_updateUser: createRota(input:{
+  id:"/cognito/updateUser",
+  nome:"/cognito/updateUser",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/updateUser",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_updateUser_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_updateUser_RegraListRota1",
+  rotaRegraslistId:"/cognito/updateUser"
+}){
+  id
+}
+
+_cognito_updateUser_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_updateUser_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/deleteUser
+# [["gestaoUsuariosEquipesEdicao"]]
+
+_cognito_deleteUser: createRota(input:{
+  id:"/cognito/deleteUser",
+  nome:"/cognito/deleteUser",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/deleteUser",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_deleteUser_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_deleteUser_RegraListRota1",
+  rotaRegraslistId:"/cognito/deleteUser"
+}){
+  id
+}
+
+_cognito_deleteUser_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_deleteUser_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/listAdminsClientes
+# [["gestaoAdminClientes"]]
+
+_cognito_listAdminsClientes: createRota(input:{
+  id:"/cognito/listAdminsClientes",
+  nome:"/cognito/listAdminsClientes",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listAdminsClientes",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_listAdminsClientes_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_listAdminsClientes_RegraListRota1",
+  rotaRegraslistId:"/cognito/listAdminsClientes"
+}){
+  id
+}
+
+_cognito_listAdminsClientes_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoAdminClientes",
+  regraListRotaId:"_cognito_listAdminsClientes_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+
+# /cognito/listUsersInOrg
+# [["gestaoUsuariosEquipesVisualizacao","gestaoUsuariosEquipesEdicao"]]
+
+_cognito_listUsersInOrg: createRota(input:{
+  id:"/cognito/listUsersInOrg",
+  nome:"/cognito/listUsersInOrg",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listUsersInOrg",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_listUsersInOrg_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_listUsersInOrg_RegraListRota1",
+  rotaRegraslistId:"/cognito/listUsersInOrg"
+}){
+  id
+}
+
+_cognito_listUsersInOrg_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesVisualizacao",
+  regraListRotaId:"_cognito_listUsersInOrg_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+_cognito_listUsersInOrg_RegraListRota1_Regras2: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_listUsersInOrg_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/addUserToOrg
+# [["gestaoAdminClientes"]]
+
+_cognito_addUserToOrg: createRota(input:{
+  id:"/cognito/addUserToOrg",
+  nome:"/cognito/addUserToOrg",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/addUserToOrg",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_addUserToOrg_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_addUserToOrg_RegraListRota1",
+  rotaRegraslistId:"/cognito/addUserToOrg"
+}){
+  id
+}
+
+_cognito_addUserToOrg_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoAdminClientes",
+  regraListRotaId:"_cognito_addUserToOrg_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/listEquipeRegras
+# [["gestaoUsuariosEquipesVisualizacao","gestaoUsuariosEquipesEdicao"]]
+
+_cognito_listEquipeRegras: createRota(input:{
+  id:"/cognito/listEquipeRegras",
+  nome:"/cognito/listEquipeRegras",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listEquipeRegras",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_listEquipeRegras_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_listEquipeRegras_RegraListRota1",
+  rotaRegraslistId:"/cognito/listEquipeRegras"
+}){
+  id
+}
+
+_cognito_listEquipeRegras_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesVisualizacao",
+  regraListRotaId:"_cognito_listEquipeRegras_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+_cognito_listEquipeRegras_RegraListRota1_Regras2: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_listEquipeRegras_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+# /cognito/updateEquipeRegras
+# [["gestaoUsuariosEquipesEdicao"]]
+
+_cognito_updateEquipeRegras: createRota(input:{
+  id:"/cognito/updateEquipeRegras",
+  nome:"/cognito/updateEquipeRegras",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/updateEquipeRegras",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_updateEquipeRegras_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_updateEquipeRegras_RegraListRota1",
+  rotaRegraslistId:"/cognito/updateEquipeRegras"
+}){
+  id
+}
+
+_cognito_updateEquipeRegras_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_updateEquipeRegras_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/createCliente
+# [["gestaoAdminClientes"]]
+
+_cognito_createCliente: createRota(input:{
+  id:"/cognito/createCliente",
+  nome:"/cognito/createCliente",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/createCliente",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_createCliente_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_createCliente_RegraListRota1",
+  rotaRegraslistId:"/cognito/createCliente"
+}){
+  id
+}
+
+_cognito_createCliente_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoAdminClientes",
+  regraListRotaId:"_cognito_createCliente_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/createRevenda
+# []
+
+_cognito_createRevenda: createRota(input:{
+  id:"/cognito/createRevenda",
+  nome:"/cognito/createRevenda",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/createRevenda",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+
+# /cognito/disableCliente
+# [["gestaoStatusClientesEdicao","gestaoAdminClientes"]]
+
+_cognito_disableCliente: createRota(input:{
+  id:"/cognito/disableCliente",
+  nome:"/cognito/disableCliente",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/disableCliente",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_disableCliente_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_disableCliente_RegraListRota1",
+  rotaRegraslistId:"/cognito/disableCliente"
+}){
+  id
+}
+
+_cognito_disableCliente_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoStatusClientesEdicao",
+  regraListRotaId:"_cognito_disableCliente_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+_cognito_disableCliente_RegraListRota1_Regras2: createRotaRegras(input:{
+  regraRegraNome:"gestaoAdminClientes",
+  regraListRotaId:"_cognito_disableCliente_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/deleteCliente
+# [["gestaoAdminClientes"]]
+
+_cognito_deleteCliente: createRota(input:{
+  id:"/cognito/deleteCliente",
+  nome:"/cognito/deleteCliente",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/deleteCliente",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_deleteCliente_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_deleteCliente_RegraListRota1",
+  rotaRegraslistId:"/cognito/deleteCliente"
+}){
+  id
+}
+
+_cognito_deleteCliente_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoAdminClientes",
+  regraListRotaId:"_cognito_deleteCliente_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/enableCliente
+# [["gestaoStatusClientesEdicao","gestaoAdminClientes"]]
+
+_cognito_enableCliente: createRota(input:{
+  id:"/cognito/enableCliente",
+  nome:"/cognito/enableCliente",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/enableCliente",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_enableCliente_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_enableCliente_RegraListRota1",
+  rotaRegraslistId:"/cognito/enableCliente"
+}){
+  id
+}
+
+_cognito_enableCliente_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoStatusClientesEdicao",
+  regraListRotaId:"_cognito_enableCliente_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+_cognito_enableCliente_RegraListRota1_Regras2: createRotaRegras(input:{
+  regraRegraNome:"gestaoAdminClientes",
+  regraListRotaId:"_cognito_enableCliente_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+# /cognito/enableNovaRevenda
+# [["rootAllEdicao"]]
+
+_cognito_enableNovaRevenda: createRota(input:{
+  id:"/cognito/enableNovaRevenda",
+  nome:"/cognito/enableNovaRevenda",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/enableNovaRevenda",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_enableNovaRevenda_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_enableNovaRevenda_RegraListRota1",
+  rotaRegraslistId:"/cognito/enableNovaRevenda"
+}){
+  id
+}
+
+_cognito_enableNovaRevenda_RegraListRota1_Regra1: createRotaRegras(input:{
+  regraRegraNome:"rootAllEdicao",
+  regraListRotaId:"_cognito_enableNovaRevenda_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/setUserPassword
+# [["gestaoUsuariosEquipesEdicao"]]
+
+_cognito_setUserPassword: createRota(input:{
+  id:"/cognito/setUserPassword",
+  nome:"/cognito/setUserPassword",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/setUserPassword",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_setUserPassword_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_setUserPassword_RegraListRota1",
+  rotaRegraslistId:"/cognito/setUserPassword"
+}){
+  id
+}
+
+_cognito_setUserPassword_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoUsuariosEquipesEdicao",
+  regraListRotaId:"_cognito_setUserPassword_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+# /cognito/listaTodosGruposCognito
+# [["rootAllEdicao"]]
+
+_cognito_listaTodosGruposCognito: createRota(input:{
+  id:"/cognito/listaTodosGruposCognito",
+  nome:"/cognito/listaTodosGruposCognito",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listaTodosGruposCognito",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_listaTodosGruposCognito_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_listaTodosGruposCognito_RegraListRota1",
+  rotaRegraslistId:"/cognito/listaTodosGruposCognito"
+}){
+  id
+}
+
+_cognito_listaTodosGruposCognito_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"rootAllEdicao",
+  regraListRotaId:"_cognito_listaTodosGruposCognito_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+
+# /cognito/listaTodosUsuariosCognito
+#		[["rootAllEdicao"]]
+
+_cognito_listaTodosUsuariosCognito: createRota(input:{
+  id:"/cognito/listaTodosUsuariosCognito",
+  nome:"/cognito/listaTodosUsuariosCognito",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listaTodosUsuariosCognito",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_listaTodosUsuariosCognito_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_listaTodosUsuariosCognito_RegraListRota1",
+  rotaRegraslistId:"/cognito/listaTodosUsuariosCognito"
+}){
+  id
+}
+
+_cognito_listaTodosUsuariosCognito_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"rootAllEdicao",
+  regraListRotaId:"_cognito_listaTodosUsuariosCognito_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+
+# /cognito/apagaListaUsuariosCognito
+#		[["rootAllEdicao"]]
+
+_cognito_apagaListaUsuariosCognito: createRota(input:{
+  id:"/cognito/apagaListaUsuariosCognito",
+  nome:"/cognito/apagaListaUsuariosCognito",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/apagaListaUsuariosCognito",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_apagaListaUsuariosCognito_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_apagaListaUsuariosCognito_RegraListRota1",
+  rotaRegraslistId:"/cognito/apagaListaUsuariosCognito"
+}){
+  id
+}
+
+_cognito_apagaListaUsuariosCognito_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"rootAllEdicao",
+  regraListRotaId:"_cognito_apagaListaUsuariosCognito_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+
+
+# /cognito/apagaListaGruposCognito
+#		[["rootAllEdicao"]]
+
+_cognito_apagaListaGruposCognito: createRota(input:{
+  id:"/cognito/apagaListaGruposCognito",
+  nome:"/cognito/apagaListaGruposCognito",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/apagaListaGruposCognito",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_apagaListaGruposCognito_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_apagaListaGruposCognito_RegraListRota1",
+  rotaRegraslistId:"/cognito/apagaListaGruposCognito"
+}){
+  id
+}
+_cognito_apagaListaGruposCognito_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"rootAllEdicao",
+  regraListRotaId:"_cognito_apagaListaGruposCognito_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+
+
+# /cognito/listUserRegras
+#		[]
+
+_cognito_listUserRegras: createRota(input:{
+  id:"/cognito/listUserRegras",
+  nome:"/cognito/listUserRegras",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listUserRegras",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_listUserRegras_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_listUserRegras_RegraListRota1",
+  rotaRegraslistId:"/cognito/listUserRegras"
+}){
+  id
+}
+
+
+# /cognito/setClienteAdminPassword
+#		[["gestaoAdminClientes"]]
+
+_cognito_setClienteAdminPassword: createRota(input:{
+  id:"/cognito/setClienteAdminPassword",
+  nome:"/cognito/setClienteAdminPassword",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/setClienteAdminPassword",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_setClienteAdminPassword_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_setClienteAdminPassword_RegraListRota1",
+  rotaRegraslistId:"/cognito/setClienteAdminPassword"
+}){
+  id
+
+
+}
+
+_cognito_setClienteAdminPassword_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"gestaoAdminClientes",
+  regraListRotaId:"_cognito_setClienteAdminPassword_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+
+# /cognito/getSwaggerJson
+#		[["rootAllEdicao"]]
+_cognito_getSwaggerJson: createRota(input:{
+  id:"/cognito/getSwaggerJson",
+  nome:"/cognito/getSwaggerJson",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/getSwaggerJson",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+}
+
+_cognito_getSwaggerJson_RegraListRota1: createRegraListRota(input:{
+  id:"_cognito_getSwaggerJson_RegraListRota1",
+  rotaRegraslistId:"/cognito/getSwaggerJson"
+}){
+  id
+}
+
+_cognito_getSwaggerJson_RegraListRota1_Regras1: createRotaRegras(input:{
+  regraRegraNome:"rootAllEdicao",
+  regraListRotaId:"_cognito_getSwaggerJson_RegraListRota1"
+}){
+  id
+  regraRegraNome
+  regraListRotaId
+}
+
+#/cognito/listRegras
+#[]
+
+_cognito_listRegras: createRota(input:{
+  id:"/cognito/listRegras",
+  nome:"/cognito/listRegras",
+  url:"https://u8iwd97rw4.execute-api.sa-east-1.amazonaws.com/dev/cognito/listRegras",
+  descricao:"",
+  apiRESTRotasId:"cognitoApi"
+}){
+  id
+  nome
+
+}
+
+
+}

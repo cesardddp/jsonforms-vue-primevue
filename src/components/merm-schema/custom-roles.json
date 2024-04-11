@@ -1,0 +1,7 @@
+{
+    "adminRoleNames": ["compileScore-devs",
+    "meucpd-dev-leonardo",
+    "meucpd-dev",
+    "cognitoApi-devs","createEupdateMeta-devs",
+    "orquestrador-staging"]
+}

@@ -1,0 +1,121 @@
+# Model
+# Definições usadas no MERM-ORQUESTRADOR
+
+type Model  # CustomType
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  apenas_tipo: Boolean! # Eh_model = True ou False
+  nome: String! # Nome_model
+  label: String! # Label_model
+  campos: [Campo!]! @hasMany
+  auth: [Rule!]
+  descricao: String
+  modulos: [Modulo!] @manyToMany(relationName: "ModelsModulosRT")
+  formularios: [AmplifyFormVue!] @hasMany
+  grids: [Grid!] @hasMany
+  cards: [Card!] @hasMany
+  
+}
+type Rule {
+  allow: allowEnum!
+  operations: [operationsEnum!]
+  provider: providerEnum
+  ownerField: String
+  identityClaim: String
+  ownerClaim: String
+  groups: [String!]
+  groupsField: String
+}
+
+type Campo
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  nome: String!
+  labelInput: String!
+  tipo: tiposCampos! # tipo do campo
+  tipoItens: tiposCampos # Somente para campos do tipo Array - Tipo do item do array
+  nomeCustomTipo: String # Somente para campos do tipo CustomTipo ou Enum - Nome do tipo customizado ou da enum
+  enum: Enum @hasOne
+  default: String # Default (Valor padrão para o campo)
+  obrigatorio: Boolean! # Obrigatório = True ou False
+  itensObrigatorio: Boolean # Itens_obrigatorio = True ou False (Somente para campos do tipo Array)
+  relacaoModel: RelacaoModel
+  auth: [Rule!]
+  descricao: String
+  visao: [visaoEnum!] # Visao = "list" | "grid" | "form";
+  labelInput: String!
+}
+
+type Enum
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  nome: String!
+  itens: [String!]!
+  descricao: String
+}
+
+type RelacaoModel {
+  tipoRelacao: tipoRelacao! # Tipo_relacao = "hasOne" | "hasMany" | "belongsTo" | "manyToMany";
+  entidade_relacao: String! # Relacionamento =  model / campo com a qual se relaciona
+  relationName: String # Somente em many-to-many Nome da tabela que fará o relacoinamento manyToMany. Vira: tags: [Tag] @manyToMany(relationName: "PostTags")
+}
+
+enum tiposCampos {
+  ID
+  String
+  Int
+  Float
+  Boolean
+  AWSDate
+  AWSTime
+  AWSDateTime
+  AWSIPAddress
+  AWSURL
+  AWSJSON
+  AWSPhone
+  AWSTimestamp
+  AWSEmail
+  Enum
+  Array
+  Relacao
+  CustomTipo
+  #* CRIPTOGRAFIA
+}
+
+enum tipoRelacao {
+  hasOne
+  hasMany
+  belongsTo
+  manyToMany
+}
+
+enum allowEnum {
+  public
+  groups
+  private
+  owner
+  iam
+  custom
+}
+enum providerEnum {
+  userPools
+  oidc
+  iam
+  apiKey
+}
+enum operationsEnum {
+  create
+  read
+  update
+  delete
+}
+
+enum visaoEnum {
+  list
+  grid
+  form
+}
+
+
+
+

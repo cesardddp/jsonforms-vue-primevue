@@ -1,22 +1,15 @@
 {
   "name": "jsonforms-vue-primevue",
+  "version": "0.0.0",
+  "description": "Vue 3 PrimeVue renderers for JSON Forms",
   "type": "module",
   "private": false,
-  "version": "0.0.0",
   "files": [
     "dist","src"
   ],
-  "main": "./dist/jsonforms-vue-primevue.umd.ts",
-  "module": "./dist/jsonforms-vue-primevue.es.ts",
-  "types": "./dist/src/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/jsonforms-vue-primevue.es.js",
-      "require": "./dist/jsonforms-vue-primevue.umd.ts"
-    },
-    "./dist/style.scss": "./dist/style.scss"
-  },
-  "description": "Vue 3 PrimeVue renderers for JSON Forms",
+  "module": "./dist/jsonforms-vue-primevue.es.js",
+  "main": "./dist/jsonforms-vue-primevue.cjs.js",
+  "types": "./dist/index.d.ts",
   "repository": "https://github.com/cesardddp/jsonforms-vue-primevue/",
   "bugs": "https://github.com/cesardddp/jsonforms-vue-primevue/issues",
   "homepage": "http://jsonforms.io/",

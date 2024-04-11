@@ -1,0 +1,65 @@
+type NavBar {
+  brand: BrandNavBar
+  modulos: [ModulosButtons!]
+  outros_botoes: [Menu!]
+  nav_bar_opcoes: NavBarOpcoes
+}
+type ModulosButtons {
+  modulo: String!
+  telas: [Menu!]
+  grupos_auth: [String!]
+  enableShow: Boolean # se o botão do módulo deve ser exibido
+}
+type BrandNavBar { # Bootstrap Brand TODO testar navbar do SyncFusion https:ej2.syncfusion.com/vue/documentation/menu/getting-started/
+  is_home: Boolean! # é clicavel e retorna pra home
+  imagem_logo: String! # URL da imagem, TODO ou referencia da imagem no s3, ou nome da imagem na pasta `public` do Vue/Vite
+  height: Int
+  width: Int
+}
+
+type NavBarOpcoes {
+  imagem_avatar: String! # Icon ou URL da imagem, TODO ou referencia da imagem no s3, ou nome da imagem na pasta `public` do Vue/Vite
+  # pode ser um Icon autogerado a partir do nome ou id (unique)
+  drop_down_menu: [Menu!]
+}
+
+# menu (botoes) da navbar, são dropdowns
+type Menu {
+  nome: String!
+  tela: String # tela que será exibida quando o menu for clicado
+  href: String # se não for vazio, etnão `tela` e `menus`é vazio, significando que o menu é apenas um <a> para um link esxterno, com o href aqui.
+  auth: [String!] # grupo de usuários pra quem será exibido
+  menus: [Menu!] # submenus com suas telas
+}
+
+type Login {
+  # LOGIN = Opções e configurações de login do cognito.
+  form_login: FormLogin!
+}
+
+type FormLogin {
+  logos: [ImagensLogo!]
+  background_color_theme: formLoginBackground! # tema da cor de fundo do formlogin
+  footer: FormLoginFooter
+  cor_primaria: String # cor do texto do formlogin
+  cor_secundaria: String # cor do texto do formlogin
+  cor_terciaria: String # cor do texto do formlogin
+}
+
+type ImagensLogo {
+  imagem: String! # imagem logo no topo do formlogin
+  height: Int
+  width: Int
+  legenda: String
+  alt: String
+}
+
+type FormLoginFooter {
+  sing_up_mensagem: String!
+  link: String!
+}
+
+enum formLoginBackground {
+  bg_dark
+  bg_light
+}

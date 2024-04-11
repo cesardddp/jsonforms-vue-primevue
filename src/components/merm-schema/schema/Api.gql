@@ -1,0 +1,88 @@
+type Api
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  nome: String! # Nome_api
+  tipoApi: tipoApiModel! # Tipo: (GraphQL, Cognito, REST, ThirdParties, Funcao)
+  # nome_entidade: String
+  dominio: String # Rota: (link para acesso a API)
+  caminhos: [String]! # Rota: (link para acesso a API)
+  headers: [Header!] # Header: {Campos para o cabeçalho da API se necessário}
+  lambdafunction: String # Funcao: (nome da função que vai ser chamada)
+  region: String # Regiao: (região da AWS onde a API está hospedada)
+  block: String
+  auth: [Rule!]
+  swaggerJson: String
+  inputsREST: [EntradaApi!] @hasMany
+  inputsFuncao: [EntradaApi!] @hasMany
+  inputsSQL: [EntradaApi!] @hasMany
+  tipoRespostaFuncao: RespostaApi
+  descricao: String
+  tipoAutenticacao: tipoAutenticacaoApi
+}
+
+enum tipoAutenticacaoApi {
+  noAuth # Sem autenticação
+  apiKey # API Key
+  bearerToken # Bearer Token
+  basicAuth # Basic Auth (Usuário e Senha) em Base64
+  other # Outro
+}
+
+enum tipoApiModel {
+  GraphQL # Automatica
+  Cognito # Automatica
+  #* REST # Interna/Personalizada
+  #* ThirdParties # Externa/Interna/Personalizada?
+  funcao # nome da lambda function
+  REST # REST
+  SQL # SQL RESOLVER
+}
+
+enum tipoEntradaApi {
+  query # Query https://docs.amplify.aws/vue/build-a-backend/graphqlapi/custom-business-logic/#query-string
+  body # Body https://docs.amplify.aws/vue/build-a-backend/graphqlapi/custom-business-logic/#request-body
+  path # Path https://docs.amplify.aws/vue/build-a-backend/graphqlapi/custom-business-logic/#path-parameters
+  header # Header https://docs.amplify.aws/vue/build-a-backend/graphqlapi/custom-business-logic/#headers
+}
+
+enum methodsApi {
+  GET
+  POST
+  PUT
+  DELETE
+  PATCH
+  OPTIONS
+  HEAD
+}
+
+
+
+type Header {
+  key: String!
+  value: String!
+}
+
+type EntradaApi #para cada entrada , será criado um tipo de entrada e um tipo de resposta, e se a opção isField for true, será criado um campo no model
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  tipo: tiposCampos #se isso estiver definido, nenhum tipo novo é criado apenas é usado o tipo já existente
+  campos: [Campo!] @hasMany #se vazio, não tem parametros
+  nome: String!
+  descricao: String
+  tipoEntrada: tipoEntradaApi, # query, body, path, header
+  caminho: String! #esse caminho tem que ser um dos caminhos da api
+  metodo: methodsApi
+  resposta: RespostaApi #todo input tem uma resposta associada
+  nomeCustomTipo: String
+  statement: String # SQL RESOLVER
+  
+}
+
+
+
+type RespostaApi {
+  tipo: tiposCampos # ESSE ENUM JÁ EXISTE EM Model.gql
+  isArray: Boolean
+  obrigatorio: Boolean
+  nomeCustomTipo: String
+}

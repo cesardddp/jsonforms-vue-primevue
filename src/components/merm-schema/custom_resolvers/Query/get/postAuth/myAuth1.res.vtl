@@ -1,0 +1,241 @@
+#if($ctx.error)
+    $util.error($ctx.error.message, $ctx.error.type)
+#end
+## Pass back the result from DynamoDB. **
+
+#if( $util.authType() == "User Pool Authorization" )
+
+    #set( $groupCognitoGroupNames = [] ) ## Lista para armazenar os nomes dos grupos
+
+    #foreach( $equipe in $ctx.result.items )
+        #if($equipe.containsKey("groupCognitoGroupName"))
+            #set($discard = $groupCognitoGroupNames.add($equipe.groupCognitoGroupName))
+        #end
+    #end
+    $util.log.info("Equipes: $util.toJson($groupCognitoGroupNames) ")
+
+    $util.log.info("Verificando se o grupo do usuario Tem Autorizacao
+    $util.toJson($ctx.identity.groups)" )
+
+    ##Identificando orgaização
+
+    ##define lista de organização
+    #set( $orgsNames = [] )
+    #set( $orgsGroups = [] )
+
+    #foreach( $equipe in $ctx.identity.groups)
+
+        #if($equipe.contains("orggroup"))
+
+            ## $util.qr($ctx.stash.put("OrgGroupName", $equipe))
+            ## $util.qr($ctx.stash.put("OrgName", $equipe.replace("orggroup-", "")))
+
+            ##add org to list
+            #set($discard = $orgsNames.add($equipe.replace("orggroup-", "")))
+            #set($discard = $orgsGroups.add($equipe))
+
+        #end
+    #end
+    ##coloca lista de orgs no stash
+    $util.qr($ctx.stash.put("OrgsNames", $orgsNames))
+    $util.qr($ctx.stash.put("OrgsGroups", $orgsGroups))
+
+    ##printa
+    $util.log.info("OrgsNames: $util.toJson($orgsNames) ")
+    $util.log.info("OrgsGroups: $util.toJson($orgsGroups) ")
+
+    #foreach( $equipe in $groupCognitoGroupNames )
+
+        #if( $ctx.identity.groups.contains($equipe) )
+            #set( $isAuthorized = true )
+        #else
+            #set( $isAuthorized = false )
+            ## setar autorização como true e seguir a vida
+        #end
+    #end
+    #if( !$isAuthorized )
+        $util.unauthorized()
+    #end
+
+    ##obtendo len do nome do grupo
+    #set( $len = $orgsGroups[0].length() )
+
+    ##Printando o nome do grupo
+    $util.log.info("Nome do grupo: $orgsGroups[0]")
+    $util.log.info("Tamanho do nome do grupo: $len")
+
+    ## **Organização Revendedora**
+    ## orggroup-[UUID4]   
+
+    ## **Organização Cliente**
+
+    ## orggroup-[0:8 UUID da REVENDA]-[UUID4]
+
+    ## obs: UUID(1) se refere a primeira parte do UUID da revenda
+
+    ## Organização Revendedora: 44 caracteres.
+    ## Organização Cliente: 53 caracteres.
+
+    ## Se o nome do grupo tiver 44 caracteres, é uma revenda.
+    ## Se o nome do grupo tiver 53 caracteres, é um cliente.
+
+    #if( $len == 44 || $len == 45 )
+        $util.qr($ctx.stash.put("TipoOrg", "Revenda"))
+        $util.log.info("Tipo de organização: Revenda")
+        #elseif( $len == 54 )
+        $util.qr($ctx.stash.put("TipoOrg", "Cliente"))
+        $util.log.info("Tipo de organização: Cliente")
+    #else
+        $util.error("O nome do grupo não é válido!")
+        $util.unauthorized()
+
+    #end
+
+    #if( $ctx.stash.TipoOrg == "Revenda" )
+
+        ##primeira parte do UUID da revenda
+        #set( $uuid1 = $orgsNames[0].substring(0,8) )
+        $util.log.info("UUID1: $uuid1")
+
+        ##montando string para BEGINS_WITH
+        #set( $beginsWith = $uuid1 )
+        $util.log.info("beginsWith: $beginsWith")
+
+        ##definindo AuthFIlter para filtrar por ORG
+        #set($dynamicField = "org" + $ctx.stash.ModelName + "Id")
+
+        #if($ctx.stash.ModelName == "Group")
+            $util.qr($ctx.stash.put("authFilter", {
+            "orgIdEquipe": {"beginsWith": $beginsWith}
+             }))
+        #elseif( $ctx.stash.ModelName == "Org" || $ctx.stash.ModelName == "EquipeRegras" || $ctx.stash.ModelName == "ModeloRegras" || !$util.isNullOrEmpty($ctx.stash.isRT))
+          ## $util.qr($ctx.stash.put("authFilter", {
+          ##   "id": {"eq": $ctx.stash.OrgName }
+          ## }))
+          $util.log.info("Não Adiciona Filtro")
+        #else
+        $util.qr($ctx.stash.put("authFilter", {
+          $dynamicField: {"beginsWith": $beginsWith}
+        }))
+        #end
+
+      ## Definindo condições personalizadas para mutations baseadas na ORG
+      #set($dynamicConditionField = "org" + $ctx.stash.ModelName + "Id")
+
+      #set($ctx.stash.conditions = $util.defaultIfNull($ctx.stash.conditions, []))
+      $util.log.info($ctx.stash.fieldName)
+      ##printa $ctx.args.input.orgIdEquipe
+      $util.log.info($ctx.args.input[$dynamicConditionField])
+
+      #set( $beginsWitharget =  $ctx.args.input[$dynamicConditionField].substring(0,8))
+      $util.log.info("BorgTarget: $beginsWith $beginsWitharget")
+      ##printa $ctx.stash.OrgsNames[0]
+      $util.log.info($ctx.stash.OrgsNames[0])
+
+      #if(!$ctx.stash.fieldName.startsWith("create"))
+          #if($ctx.stash.ModelName == "Group")
+              $util.qr($ctx.stash.conditions.add({
+                "orgIdEquipe": {
+                    "beginsWith": $beginsWith
+                }
+              }))
+          #elseif( $ctx.stash.ModelName == "Org" || $ctx.stash.ModelName == "EquipeRegras" || $ctx.stash.ModelName == "ModeloRegras" || !$util.isNullOrEmpty($ctx.stash.isRT))
+              $util.log.info("Não Adiciona Filtro")
+          #else
+              $util.qr($ctx.stash.conditions.add({
+                $dynamicConditionField: {
+                    "beginsWith": $beginsWith
+                }
+              }))
+          #end
+      #elseif($ctx.args.input[$dynamicConditionField] == $ctx.stash.OrgsNames[0] || $beginsWith==$beginsWitharget || !$util.isNullOrEmpty($ctx.stash.isRT))
+          $util.log.info("Operação de create realizada!")
+      #else
+          $util.error("Você está tentando criar um registro que não faz parte da sua organização!")
+        $util.unauthorized()
+      #end
+
+  #elseif( $ctx.stash.TipoOrg == "Cliente" )
+
+    ##primeira parte do UUID da revenda
+    #set( $uuid1 = $orgsNames[0].substring(0,8) )
+    $util.log.info("UUID1: $uuid1")
+
+    ##montando string para BEGINS_WITH
+    #set( $beginsWith = "orggroup-" + $uuid1 )
+    $util.log.info("beginsWith: $beginsWith")
+
+    ##tirando primeiro hifen do orgnames fMCPD393-d29708d5-ec89-4a3d-9f9e-648ee4ff4b7f ----> fMCPD393d29708d5-ec89-4a3d-9f9e-648ee4ff4b7f
+    #set( $newOrgName = $ctx.stash.OrgsNames[0].substring(0,8) + $ctx.stash.OrgsNames[0].substring(9,$ctx.stash.OrgsNames[0].length()) )
+    
+
+    $util.qr($ctx.stash.OrgsNames.add($newOrgName))
+
+    $util.log.info($ctx.stash.OrgsNames)
+
+    ##definindo AuthFIlter para filtrar por ORG
+    #set($dynamicField = "org" + $ctx.stash.ModelName + "Id")
+
+    #if($ctx.stash.ModelName == "Group")
+    $util.qr($ctx.stash.put("authFilter", {
+      "orgIdEquipe": {"in": $ctx.stash.OrgsNames}
+    }))
+    #elseif( $ctx.stash.ModelName == "Org" || $ctx.stash.ModelName == "EquipeRegras" || $ctx.stash.ModelName == "ModeloRegras" || !$util.isNullOrEmpty($ctx.stash.isRT))
+
+    ## $util.qr($ctx.stash.put("authFilter", {
+    ##   "id": {"eq": $ctx.stash.OrgName }
+    ## }))
+    $util.log.info("Não Adiciona Filtro")
+    #else
+    $util.qr($ctx.stash.put("authFilter", {
+      $dynamicField: {"in": $ctx.stash.OrgsNames}
+    }))
+    #end
+
+    ## Definindo condições personalizadas para mutations baseadas na ORG
+    #set($dynamicConditionField = "org" + $ctx.stash.ModelName + "Id")
+
+    #set($ctx.stash.conditions = $util.defaultIfNull($ctx.stash.conditions, []))
+    $util.log.info($ctx.stash.fieldName)
+    ##printa $ctx.args.input.orgIdEquipe
+    $util.log.info($ctx.args.input[$dynamicConditionField])
+
+
+    
+    ##printa $ctx.stash.OrgsNames[0]
+    $util.log.info($ctx.stash.OrgsNames[0])
+
+    #if(!$ctx.stash.fieldName.startsWith("create"))
+        #if($ctx.stash.ModelName == "Group")
+            $util.qr($ctx.stash.conditions.add({
+              "orgIdEquipe": {
+                  "in": $ctx.stash.OrgsNames
+              }
+            }))
+        #elseif( $ctx.stash.ModelName == "Org" || $ctx.stash.ModelName == "EquipeRegras" || $ctx.stash.ModelName == "ModeloRegras" || !$util.isNullOrEmpty($ctx.stash.isRT))
+            $util.log.info("Não Adiciona Filtro")
+        #else
+            $util.qr($ctx.stash.conditions.add({
+              $dynamicConditionField: {
+                  "in": $ctx.stash.OrgsNames
+              }
+            }))
+        #end
+    #elseif($ctx.args.input[$dynamicConditionField] == $ctx.stash.OrgsNames[0] || !$util.isNullOrEmpty($ctx.stash.isRT))
+        $util.log.info("Operação de create realizada!")
+    #else
+        $util.error("Você está tentando criar um registro que não faz parte da sua organização!")
+      	$util.unauthorized()
+    #end
+
+
+  #end
+
+#end
+
+
+$util.qr($ctx.args.put("limit", 1000000000))
+
+
+$util.log.info($util.toJson($context.stash))
+$util.toJson({})

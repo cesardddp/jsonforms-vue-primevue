@@ -1,0 +1,20 @@
+mutation DeleteAll {
+  #  DELETE CAMPOS
+  unique_name_delete_Campo_0: deleteCampo(input: { id: "id-do-campo-0" })
+  unique_name_delete_Campo_1: deleteCampo(input: { id: "id-do-campo-1" })
+  #   .... all other delete mutations
+
+  #DELETE MODELS
+  unique_name_delete_Model_0: deleteModel(input: { id: "id-do-model-0" })
+  # .... all other delete mutations
+
+  #   DELETE ENUMS
+  unique_name_delete_Enum_0: deleteEnum(input: { id: "id-do-enum-0" })
+  unique_name_delete_Enum_1: deleteEnum(input: { id: "id-do-enum-1" })
+  #   .... all other delete mutations
+
+  #   DELETE MODULOS
+  unique_name_delete_Modulo_0: deleteModulo(input: { id: "id-do-modulo-0" })
+  unique_name_delete_Modulo_1: deleteModulo(input: { id: "id-do-modulo-1" })
+  #   .... all other delete mutations
+}

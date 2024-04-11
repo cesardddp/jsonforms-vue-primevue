@@ -1,0 +1,110 @@
+type Query {
+  orquestrador(input: String): String
+    @function(name: "orquestrador-staging")
+  
+}
+
+enum CognitoApiOperations {
+  cognito_create_user
+  cognito_authenticate_user
+  cognito_update_user
+  cognito_delete_user
+  cognito_confirm_user
+  cognito_reset_password
+  cognito_create_group
+  cognito_delete_group
+  cognito_list_groups
+  cognito_add_user_to_group
+  cognito_remove_user_from_group
+  cognito_list_groups_for_user
+  cognito_list_users_in_group
+  cognito_list_users
+}
+
+type Autor {
+usuarioId : String!
+email: AWSEmail!
+CognitoGroupName: ID!
+}
+
+type Aplicacao
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  nome: String!
+  dominio: String
+  scores: [Score!] @hasMany
+  dev: Symphonia @hasOne
+  test: Symphonia @hasOne
+  producao: Symphonia @hasOne
+  descricao: String
+  amplifyId: String
+  executionArn: String #the current execution arn
+  listExecutionsArn: [String!] #list of all executions arn
+  autor: Autor
+
+}
+
+type Symphonia
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) { # App Amplify
+  meta: Meta @hasOne
+  ambiente: ambienteEnum! # Authorization = Grupos / usuários que tem acesso ao módulo, que vai ver o módulo no menu
+  score: Score @hasOne
+  logs: [Log!] @hasMany
+  descricao: String
+}
+
+type Score
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  descricaoVersao: String # Nome_modulo
+  modulos: [Modulo!] @hasMany # Modulos = Array dos módulos
+  models: [Model!] @hasMany # Models = Array dos models
+  nav_bar: NavBar
+  login: Login
+  grupos: [String!]
+  api: [Api!] @hasMany
+  aplicacao: Aplicacao! @belongsTo
+  relationalBD: RDBConnection
+  descricao: String
+  graphqlAPIDefiniton: String #aqui estara o texto do schema.graphql
+}
+
+type Meta
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  appSyncId: String
+  app_name: String!
+  BackendEnvironmentName: ambienteEnum! # 2-10 caracteres lowercase only sem numero sem nada (ex: "teste")
+  BackendEnvironmentNameApp: String!
+  userPoolId: ID! @primaryKey
+  symphonia: Symphonia @belongsTo
+  
+}
+
+enum ambienteEnum {
+  test
+  dev
+  producao
+}
+
+enum RDBType {
+  mysql
+  postgresql
+  oracle
+  sqlserver
+  mariadb
+  aurora
+  neptune
+  mssql
+}
+
+type RDBConnection { # isso é de score? TODO explicar
+  # conexão com banco de dados relacional
+  typeBD: RDBType!
+  host: String!
+  port: Int!
+  username: String!
+  password: String!
+  database: String!
+}

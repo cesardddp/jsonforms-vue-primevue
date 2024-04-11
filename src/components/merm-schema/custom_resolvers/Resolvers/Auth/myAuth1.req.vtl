@@ -1,0 +1,49 @@
+#if( $util.authType() == "User Pool Authorization" )
+  $util.log.info("Hello from the 2nd script ")
+
+  ## Verifica se $ctx.stash.ModelsRegras existe e não está vazio
+  #if($ctx.stash.containsKey("ModelsRegras") && !$ctx.stash.ModelsRegras.isEmpty())
+    #set($parsedModelsRegras = $util.parseJson($ctx.stash.ModelsRegras))
+    $util.log.info($parsedModelsRegras)
+
+    ## Verifica se o parsedModelsRegras é uma lista e não está vazio
+    #if($parsedModelsRegras.size() > 0)
+      #set($regraNomes = [])
+      #foreach($regra in $parsedModelsRegras)
+        #set($discard = $regraNomes.add($regra.regraRegraNome))
+      #end
+
+      #set($filter = {
+        "regraRegraNome": { "in": $regraNomes },
+        "groupCognitoGroupName" :{"in": $ctx.identity.groups}
+      })
+
+      $util.log.info($util.toJson($filter))
+      
+      {
+        "version": "2018-05-29",
+        "operation": "Scan",
+        "filter": $util.transform.toDynamoDBFilterExpression($filter)
+      }
+    #else
+      $util.log.info("Não autorizado! Favor Checar Regras!")
+      $util.unauthorized()
+      {
+        "version": "2018-05-29",
+        "operation": "Scan"
+      }
+    #end
+  #else
+    $util.log.info("Não autorizado! Favor Checar Regras!")
+    $util.unauthorized()
+    {
+      "version": "2018-05-29",
+      "operation": "Scan"
+    }
+  #end
+#else
+   {
+    "version": "2017-02-28",
+    "operation": "Scan"
+    }
+#end

@@ -1,0 +1,87 @@
+# Modulo
+# Definições usadas no MERM-ADMIN
+
+type Modulo
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  nome: String!
+  label: String!
+  models: [Model!] @manyToMany(relationName: "ModelsModulosRT")
+  telas: [Tela!] @hasMany
+  enableShow: Boolean # se true, mostra o módulo, se false, não mostra
+  descricao: String
+  forms: [AmplifyFormVue!] @hasMany
+  grids: [Grid!] @hasMany
+  cards: [Card!] @hasMany
+}
+
+# cada tela terá um botão correspondente, mas isso não ficará
+type Tela
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  nome: String!
+  tipo: tiposTela!
+  grid: [Grid!] @hasMany
+  formulario: [AmplifyFormVue!] @hasMany
+  card: [Card!] @hasMany
+  model: String!
+  descricao: String
+}
+
+type Card
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  name: String!
+  descricao: String
+  model: Model @belongsTo
+  modulo: Modulo @belongsTo
+  tela: Tela @belongsTo
+  jsonConfig: AWSJSON
+}
+
+type Footer {
+  buttons: [ButtonFooterCard!]
+  text: String
+  css_class: String
+}
+type ButtonFooterCard {
+  text: String!
+  to: String
+  href: String
+  css_class: String
+  enableShow: Boolean! # se true, mostra o botão, se false, não mostra
+}
+
+type AmplifyFormVue
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+  id: ID!
+  name: String!
+  model: Model @belongsTo
+  modulo: Modulo @belongsTo
+  tela: Tela @belongsTo
+  schema: AWSJSON
+}
+
+type Grid
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]){
+  id: ID!
+  name: String!
+  descricao: String
+  model: Model @belongsTo
+  modulo: Modulo @belongsTo
+  tela: Tela @belongsTo
+  jsonConfig: AWSJSON
+}
+
+enum tiposTela {
+  tabela
+  formulario
+  card
+  chat
+}
+enum tipoForm {
+  create
+  update
+}

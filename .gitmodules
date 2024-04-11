@@ -1,0 +1,3 @@
+[submodule "src/merm-schema"]
+	path = src/merm-schema
+	url = https://github.com/meuCPD-Solucoes-Tecnologicas/merm-schema

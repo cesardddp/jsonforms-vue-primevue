@@ -1,0 +1,1 @@
+tabs_schema = ['EquipeRegras', 'Symphonia', 'Campo', 'ModelPermissao', 'Org', 'Enum', 'CustomResources', 'CampoFormEstilo', 'Score', 'TabelaSyncFusion', 'Group', 'ApiREST', 'ConnectionStack', 'AmplifyFormVue', 'Tela', 'Meta', 'Api', 'EntradaApi', 'Model', 'Log', 'ModelsRegras', 'Card', 'Aplicacao', 'FunctionDirectiveStack', 'Regra', 'Modulo']

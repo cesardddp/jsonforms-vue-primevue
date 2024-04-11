@@ -1,0 +1,114 @@
+{
+  "autores": ["dev"],
+  "descricaoVersao": null,
+  "aplicacao": { "nome": "Teste_MeuCPD" },
+  "models": {
+    "items": [
+      {
+        "autores": ["dev"],
+        "apenas_tipo": false,
+        "nome": "testeModel",
+        "campos": {
+          "items": [
+            {
+              "autores": ["dev"],
+              "nome": "testeCampo",
+              "tipo": "String",
+              "tipoItens": null,
+              "nomeCustomTipo": null,
+              "enum": null,
+              "default": null,
+              "obrigatorio": true,
+              "itensObrigatorio": null,
+              "relacaoModel": null,
+              "auth": null,
+              "id": "08299f93-da80-444e-bf53-6d4b3b05b516",
+              "createdAt": "2023-08-16T17:57:10.724Z",
+              "updatedAt": "2023-08-16T17:57:10.724Z",
+              "entradaApiCamposId": null,
+              "modelCamposId": "fae1cf61-b7b2-4131-b9c4-238609d6c2a3",
+              "campoEnumId": null
+            }
+          ],
+          "nextToken": null
+        },
+        "auth": null,
+        "id": "fae1cf61-b7b2-4131-b9c4-238609d6c2a3",
+        "createdAt": "2023-08-16T17:57:10.665Z",
+        "updatedAt": "2023-08-16T17:57:10.665Z",
+        "scoreModelsId": "testeId"
+      }
+    ],
+    "nextToken": null
+  },
+  "grupos": ["teste"],
+  "api": {
+    "items": [
+      {
+        "autores": ["dev"],
+        "nome": "getFrontend",
+        "tipoApi": "funcao",
+        "nome_entidade": null,
+        "dominio": null,
+        "caminho": null,
+        "headers": null,
+        "lambdafunction": "getFrontend-dev",
+        "region": null,
+        "block": null,
+        "auth": [
+          {
+            "allow": "private",
+            "operations": null,
+            "provider": null,
+            "ownerField": null,
+            "identityClaim": null,
+            "ownerClaim": null,
+            "groups": null,
+            "groupsField": null
+          }
+        ],
+        "inputsFuncao": { "items": [], "nextToken": null },
+        "tipoRespostaFuncao": { "tipo": "AWSJSON", "nomeCustomTipo": null },
+        "id": "e37b4719-47e3-4fef-a472-19e9df31beb7",
+        "createdAt": "2023-08-16T18:42:12.368Z",
+        "updatedAt": "2023-08-16T18:42:12.368Z",
+        "scoreApiId": "testeId"
+      },
+      {
+        "autores": ["dev"],
+        "nome": "getFrontend",
+        "tipoApi": "funcao",
+        "nome_entidade": null,
+        "dominio": null,
+        "caminho": null,
+        "headers": null,
+        "lambdafunction": "getFrontend-dev",
+        "region": null,
+        "block": null,
+        "auth": [
+          {
+            "allow": "private",
+            "operations": null,
+            "provider": null,
+            "ownerField": null,
+            "identityClaim": null,
+            "ownerClaim": null,
+            "groups": null,
+            "groupsField": null
+          }
+        ],
+        "inputsFuncao": { "items": [], "nextToken": null },
+        "tipoRespostaFuncao": { "tipo": "AWSJSON", "nomeCustomTipo": null },
+        "id": "b383d74a-28e0-47d4-8bef-4260219e6353",
+        "createdAt": "2023-08-16T19:37:34.674Z",
+        "updatedAt": "2023-08-16T19:37:34.674Z",
+        "scoreApiId": "testeId"
+      }
+    ],
+    "nextToken": null
+  },
+  "id": "testeId",
+  "createdAt": "2023-08-16T17:57:06.477Z",
+  "updatedAt": "2023-08-16T17:57:06.477Z",
+  "aplicacaoScoresId": "testeId"
+}

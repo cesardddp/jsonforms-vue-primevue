@@ -1,0 +1,739 @@
+#exemplo
+# mutation inserirRegras{
+#   createRegra(input:{
+#     regraNome:"",
+#     ModelPermissoes:{}
+    
+#   }){
+#     regraNome
+#     ModelPermissoes
+#     createdAt
+#   }
+# }
+
+##DADOS
+
+# {
+#     "name": "gestaoAppsEdicao", 
+#     "modelsNames": [
+#         "Org",
+#         "Aplicacao",
+#         "Log",
+#         "Api",
+#         "CampoFormEstilo",
+#         "Campo",
+#         "Card",
+#         "EntradaApi",
+#         "Enum",
+#         "Group",
+#         "Model",
+#         "Modulo",
+#         "PoliticaAcesso",
+#         "Score",
+#         "Symphonia",
+#         "Tela"
+        
+#     ],
+#     "modelsPermissao": [
+#         {
+#             "ModelName": "Org",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Aplicacao",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Log",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Api",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "CampoFormEstilo",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Campo",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Card",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "EntradaApi",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Enum",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Group",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Model",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Modulo",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "PoliticaAcesso",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Score",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Symphonia",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "Tela",
+#             "Permissao": RW
+#         }
+
+#     ]
+# }
+
+# {
+#     "name": "gestaoAppsVisualizacao",
+#     "modelsNames": [
+#         "Org",
+#         "Aplicacao",
+#         "Log",
+#         "Api",
+#         "CampoFormEstilo",
+#         "Campo",
+#         "Card",
+#         "EntradaApi",
+#         "Enum",
+#         "Group",
+#         "Model",
+#         "Modulo",
+#         "PoliticaAcesso",
+#         "Score",
+#         "Symphonia",
+#         "Tela"
+#     ],
+#     "modelsPermissao": [
+#         {
+#             "ModelName": "Org",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Aplicacao",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Log",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Api",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "CampoFormEstilo",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Campo",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Card",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "EntradaApi",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Enum",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Group",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Model",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Modulo",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "PoliticaAcesso",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Score",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Symphonia",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Tela",
+#             "Permissao":  R
+#         }
+
+#     ]
+# }
+
+
+
+# {
+#     "name": "gestaiClientesEdicao",
+#     "modelsNames": [
+#         "Org",
+#         "Log",
+#         "Group",
+#         "PoliticaAcesso"  
+#     ],
+#     "modelsPermissao": [
+#         {
+#             "ModelName": "Org",
+#             "Permissao": RW
+#         },
+        
+#         {
+#             "ModelName": "Log",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Group",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "PoliticaAcesso",
+#             "Permissao": RW
+#         }
+#     ]
+# }
+
+# {
+#     "name": "gestaoClientesVisualizacao",
+#     "modelsNames": [
+#         "Org",
+#         "Log",
+#         "Group",
+#         "PoliticaAcesso"  
+#     ],
+#     "modelsPermissao": [
+#         {
+#             "ModelName": "Org",
+#             "Permissao": RW
+#         },
+        
+#         {
+#             "ModelName": "Log",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Group",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "PoliticaAcesso",
+#             "Permissao":  R
+#         }
+#     ]
+# }
+
+# {   
+#     "name": "gestaoEquipeEdicao",
+#     "modelsNames": [
+#         "Org",
+#         "Log",
+#         "Group",
+#         "PoliticaAcesso"  
+#     ],
+#     "modelsPermissao": [
+#         {
+#             "ModelName": "Org",
+#             "Permissao":  R
+#         },
+        
+#         {
+#             "ModelName": "Log",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Group",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "PoliticaAcesso",
+#             "Permissao": RW
+#         }
+#     ]
+# }
+
+# {
+#     "name": "gestaoEquipeVisualizacao",
+#     "modelsNames": [
+#         "Org",
+#         "Log",
+#         "Group",
+#         "PoliticaAcesso"  
+#     ],
+#     "modelsPermissao": [
+#         {
+#             "ModelName": "Org",
+#             "Permissao":  R
+#         },
+        
+#         {
+#             "ModelName": "Log",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Group",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "PoliticaAcesso",
+#             "Permissao":  R
+#         }
+#     ]
+# }
+
+# {
+#     "name": "gestaoOrgEdicao",
+#     "modelsNames": [
+#         "Org",
+#         "Log",
+#         "Group",
+#         "PoliticaAcesso"  
+#     ],
+#     "modelsPermissao": [
+#         {
+#             "ModelName": "Org",
+#             "Permissao": RW
+#         },
+        
+#         {
+#             "ModelName": "Log",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Group",
+#             "Permissao": RW
+#         },
+#         {
+#             "ModelName": "PoliticaAcesso",
+#             "Permissao": RW
+#         }
+#     ]
+# }
+
+# {
+#     "name": "gestaoOrgVisualizacao",
+#     "modelsNames": [
+#         "Org",
+#         "Log",
+#         "Group",
+#         "PoliticaAcesso"  
+#     ],
+#     "modelsPermissao": [
+#         {
+#             "ModelName": "Org",
+#             "Permissao":  R
+#         },
+        
+#         {
+#             "ModelName": "Log",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "Group",
+#             "Permissao":  R
+#         },
+#         {
+#             "ModelName": "PoliticaAcesso",
+#             "Permissao":  R
+#         }
+#     ]
+# }
+
+##MONTANDO MUTATION
+
+mutation inserirRegras{
+
+    gestaoOrgVisualizacao:
+    createRegra(input:{
+      regraNome:"gestaoOrgVisualizacao",
+      ModelPermissoes:
+        [
+          {
+            ModelName:"Org",
+            Permissao: R
+          },
+          {
+            ModelName:"Log",
+            Permissao: R
+          },
+          {
+            ModelName:"Group",
+            Permissao: R
+          },
+          {
+            ModelName:"PoliticaAcesso",
+            Permissao: R
+          }
+        ]
+      
+      
+    }){
+      regraNome
+      ModelPermissoes{
+        ModelName
+        Permissao
+      }
+      createdAt
+    }
+
+    gestaoOrgEdicao:
+    createRegra(input:{
+      regraNome:"gestaoOrgEdicao",
+      ModelPermissoes:
+        [
+          {
+            ModelName:"Org",
+            Permissao:RW
+          },
+          {
+            ModelName:"Log",
+            Permissao: R
+          },
+          {
+            ModelName:"Group",
+            Permissao:RW
+          },
+          {
+            ModelName:"PoliticaAcesso",
+            Permissao:RW
+          }
+        ]
+      
+      
+    }){
+      regraNome
+      ModelPermissoes{
+        ModelName
+        Permissao
+      }
+      createdAt
+    }
+
+    gestaoEquipeVisualizacao:
+    createRegra(input:{
+      regraNome:"gestaoEquipeVisualizacao",
+      ModelPermissoes:
+        [
+          {
+            ModelName:"Org",
+            Permissao: R
+          },
+          {
+            ModelName:"Log",
+            Permissao: R
+          },
+          {
+            ModelName:"Group",
+            Permissao: R
+          },
+          {
+            ModelName:"PoliticaAcesso",
+            Permissao: R
+          }
+        ]
+      
+      
+    }){
+      regraNome
+      ModelPermissoes{
+        ModelName
+        Permissao
+      }
+      createdAt
+    }
+
+    gestaoEquipeEdicao:
+    createRegra(input:{
+      regraNome:"gestaoEquipeEdicao",
+      ModelPermissoes:
+        [
+          {
+            ModelName:"Org",
+            Permissao: R
+          },
+          {
+            ModelName:"Log",
+            Permissao: R
+          },
+          {
+            ModelName:"Group",
+            Permissao:RW
+          },
+          {
+            ModelName:"PoliticaAcesso",
+            Permissao:RW
+          }
+        ]
+      
+      
+    }){
+      regraNome
+      ModelPermissoes{
+        ModelName
+        Permissao
+      }
+      createdAt
+    }
+
+    gestaoClientesVisualizacao:
+    createRegra(input:{
+      regraNome:"gestaoClientesVisualizacao",
+      ModelPermissoes:
+        [
+          {
+            ModelName:"Org",
+            Permissao: R
+          },
+          {
+            ModelName:"Log",
+            Permissao: R
+          },
+          {
+            ModelName:"Group",
+            Permissao: R
+          },
+          {
+            ModelName:"PoliticaAcesso",
+            Permissao: R
+          }
+        ]
+      
+      
+    }){
+      regraNome
+      ModelPermissoes{
+        ModelName
+        Permissao
+      }
+      createdAt
+    }
+    
+    gestaoClientesEdicao:
+    createRegra(input:{
+      regraNome:"gestaoClientesEdicao",
+      ModelPermissoes:
+        [
+          {
+            ModelName:"Org",
+            Permissao:RW
+          },
+          {
+            ModelName:"Log",
+            Permissao: R
+          },
+          {
+            ModelName:"Group",
+            Permissao:RW
+          },
+          {
+            ModelName:"PoliticaAcesso",
+            Permissao:RW
+          }
+        ]
+      
+      
+    }){
+      regraNome
+      ModelPermissoes{
+        ModelName
+        Permissao
+      }
+      createdAt
+    }
+
+    gestaoAppsVisualizacao:
+    createRegra(input:{
+      regraNome:"gestaoAppsVisualizacao",
+      ModelPermissoes:
+        [
+          {
+            ModelName:"Org",
+            Permissao: R
+          },
+          {
+            ModelName:"Aplicacao",
+            Permissao: R
+          },
+          {
+            ModelName:"Log",
+            Permissao: R
+          },
+          {
+            ModelName:"Api",
+            Permissao: R
+          },
+          {
+            ModelName:"CampoFormEstilo",
+            Permissao: R
+          },
+          {
+            ModelName:"Campo",
+            Permissao: R
+          },
+          {
+            ModelName:"Card",
+            Permissao: R
+          },
+          {
+            ModelName:"EntradaApi",
+            Permissao: R
+          },
+          {
+            ModelName:"Enum",
+            Permissao: R
+          },
+          {
+            ModelName:"Group",
+            Permissao: R
+          },
+          {
+            ModelName:"Model",
+            Permissao: R
+          },
+          {
+            ModelName:"Modulo",
+            Permissao: R
+          },
+          {
+            ModelName:"PoliticaAcesso",
+            Permissao: R
+          },
+          {
+            ModelName:"Score",
+            Permissao: R
+          },
+          {
+            ModelName:"Symphonia",
+            Permissao: R
+          },
+          {
+            ModelName:"Tela",
+            Permissao: R
+          }
+        ]
+      
+      
+    }){
+      regraNome
+      ModelPermissoes{
+        ModelName
+        Permissao
+      }
+      createdAt
+    }
+
+    gestaoAppsEdicao:
+    createRegra(input:{
+      regraNome:"gestaoAppsEdicao",
+      ModelPermissoes:
+        [
+          {
+            ModelName:"Org",
+            Permissao: R
+          },
+          {
+            ModelName:"Aplicacao",
+            Permissao:RW
+          },
+          {
+            ModelName:"Log",
+            Permissao: R
+          },
+          {
+            ModelName:"Api",
+            Permissao:RW
+          },
+          {
+            ModelName:"CampoFormEstilo",
+            Permissao:RW
+          },
+          {
+            ModelName:"Campo",
+            Permissao:RW
+          },
+          {
+            ModelName:"Card",
+            Permissao:RW
+          },
+          {
+            ModelName:"EntradaApi",
+            Permissao:RW
+          },
+          {
+            ModelName:"Enum",
+            Permissao:RW
+          },
+          {
+            ModelName:"Group",
+            Permissao: R
+          },
+          {
+            ModelName:"Model",
+            Permissao:RW
+          },
+          {
+            ModelName:"Modulo",
+            Permissao:RW
+          },
+          {
+            ModelName:"PoliticaAcesso",
+            Permissao:RW
+          },
+          {
+            ModelName:"Score",
+            Permissao:RW
+          },
+          {
+            ModelName:"Symphonia",
+            Permissao:RW
+          },
+          {
+            ModelName:"Tela",
+            Permissao:RW
+          }
+        ]
+      
+      
+    }){
+      regraNome
+      ModelPermissoes{
+        ModelName
+        Permissao
+      }
+      createdAt
+    }
+
+
+
+
+
+}

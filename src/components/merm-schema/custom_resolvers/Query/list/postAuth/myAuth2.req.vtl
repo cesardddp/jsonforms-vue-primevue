@@ -1,0 +1,102 @@
+##Verifica se o modo de autenticação é Cognito
+#if( $util.authType() == "User Pool Authorization" )
+
+  $util.log.info($util.toJson($ctx))
+  #if($ctx.identity.claims.email_verified)
+  	$util.log.info("E-mail Verificado!")
+  
+  #else
+  	$util.error("E-mail Não verificado")
+  #end
+
+  #set($op = $util.toJson($ctx.stash.typeName))
+  #set($op= $op.replace('"',""))
+  
+  $util.log.info("Operação: $op")
+  
+
+  
+  
+  
+    #if($op == "Query" || $op == "Subscription")
+    #set($typePermission = "R")
+  #else
+    #set($typePermission = "RW")
+
+  #end
+
+  $util.log.info("Hello from the 1nd script")
+
+  #if($op != "Subscription")
+    #set($tableName = $util.toJson($context.stash.tableName.split("-")[0]))
+    $util.qr($ctx.stash.put("ModelName",$tableName.replace('"',"")))
+    #set($concat = $tableName.replace('"',"") + $typePermission)
+    $util.log.info($tableName)
+  #else
+    ##replace the substring "onCreate" in fieldname in stash
+    #if($ctx.stash.fieldName.contains("onCreate"))
+      $util.qr($ctx.stash.put("ModelName",$ctx.stash.fieldName.replace("onCreate","")))
+    #elseif($ctx.stash.fieldName.contains("onUpdate"))
+      $util.qr($ctx.stash.put("ModelName",$ctx.stash.fieldName.replace("onUpdate","")))
+    #elseif($ctx.stash.fieldName.contains("onDelete"))
+      $util.qr($ctx.stash.put("ModelName",$ctx.stash.fieldName.replace("onDelete","")))
+    #end
+
+    #set($concat = $ctx.stash.ModelName + $typePermission)
+    
+
+  #end
+  $util.log.info($ctx.stash.ModelName)
+  ##verifica se é relation table tem que possuit RT no fim
+  #set( $isRT = $util.matches(".*RT$",$ctx.stash.ModelName) )
+  
+  #if($isRT)
+  
+   $util.log.info("Relational Table")
+   $util.qr($ctx.stash.put("isRT",$isRT))
+  #else
+  	
+  	$util.log.info("NOT Relational Table")
+  #end
+  
+
+  #if($op == "Query" || $op == "Subscription")
+  	#set($WW = $concat + "W")
+     #set($filter = {"or":[{
+    "modelPermissaoModelName": {
+      "eq": $concat
+    }},
+    {
+    "modelPermissaoModelName": {
+      "eq": $WW
+    }}
+    
+    
+  ]})
+  
+   $util.log.info(" $concat ou $WW")
+  #else
+  	 #set($filter = {
+    "modelPermissaoModelName": {
+      "eq": $concat
+    }})
+    $util.log.info($concat)
+
+  #end
+
+
+  $util.log.info($util.toJson($filter))
+  {
+    "version": "2017-02-28",
+    "operation": "Scan",
+    "filter": $util.transform.toDynamoDBFilterExpression($filter),
+    
+  }
+
+#else
+   {
+    "version": "2017-02-28",
+    "operation": "Scan"
+    }
+#end
+

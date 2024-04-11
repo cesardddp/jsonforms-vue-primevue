@@ -1,0 +1,65 @@
+type DadosEmpresa
+  @model
+  @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+
+  cnpj: String! @auth(rules: [{ allow: private, provider: userPools, operations: [read, delete] }, { allow: private, provider: iam }])
+  RazaoSocial: String! 
+  NomeFantasia: String!
+  IE_RG: String
+  Enderecos: [Endereco!]
+  Contatos: [Contato!]
+  status: statusOrg!
+  descricao: String
+  tipo: tipoOrganizacaoEnum!
+  
+  }
+
+type Endereco {
+  CEP: String!
+  Logradouro: String! # Rua, Avenida, etc
+  Numero: String!
+  Complemento: String
+  Bairro: String!
+  Cidade: String!
+  Estado: estadosEnum!
+  label: String!
+}
+
+type Contato {
+  Nome: String!
+  Telefone: String
+  Celular: String!
+  Email: AWSEmail!
+  isWhatsapp: Boolean
+  label: String!
+}
+
+enum estadosEnum {
+  AC
+  AL
+  AP
+  AM
+  BA
+  CE
+  DF
+  ES
+  GO
+  MA
+  MT
+  MS
+  MG
+  PA
+  PB
+  PR
+  PE
+  PI
+  RJ
+  RN
+  RS
+  RO
+  RR
+  SC
+  SP
+  SE
+  TO
+}
