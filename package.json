@@ -1,11 +1,11 @@
 {
   "name": "jsonforms-vue-primevue",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "description": "Vue 3 PrimeVue renderers for JSON Forms",
   "type": "module",
   "private": false,
   "files": [
-    "dist","src"
+    "dist"
   ],
   "module": "./dist/jsonforms-vue-primevue.es.js",
   "main": "./dist/jsonforms-vue-primevue.cjs.js",
@@ -62,7 +62,7 @@
     "object-path": "^0.11.8",
     "password-validator": "^5.3.0",
     "primeicons": "^6.0.1",
-    "primevue": "^3.50.0",
+    "primevue": "^3.48.1",
     "v-mask": "^2.3.0",
     "vee-validate": "^4.12.6",
     "vite-tsconfig-paths": "^4.3.2",
