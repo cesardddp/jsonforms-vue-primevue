@@ -40,9 +40,9 @@ const props = defineProps<GridProps>();
 // const props = defineProps<{ config: GridProps, value: any }>();
 
 const filters =
-//  props.filters ?
-// 	toRef(props, 'filters') :
-	 ref({ global: { value: null, matchMode: "contains" } });
+	//  props.filters ?
+	// 	toRef(props, 'filters') :
+	ref({ global: { value: null, matchMode: "contains" } });
 
 // essa função gera um link para uma imagem, substituindo os $<var>$ por data[var]
 // function genImg(img: string | boolean, data: any, field: string = "") {
@@ -80,21 +80,22 @@ const filters =
 	<div v-if="props.value">
 		<DataTable v-bind="props">
 			<template #header>
-				<InputText v-if="props.searchBar && filters" v-model="filters['global'].value" placeholder="Global Search"
-					:class="props.searchBarClass" />
-				<div v-if="props.actionsHeader && props.gridFunctions && props.gridFunctions.functions"
-					class="flex items-center space-x-1 mt-3">
-					<Button v-for="action in props.actionsHeader" :label="action.label"
-						:class="action.actionButtonClass"
-						@click="props.gridFunctions!.functions![action.function.name]"></Button>
+				<div class="flex justify-between ">
+					<InputText v-if="props.searchBar && filters" v-model="filters['global'].value"
+						placeholder="Global Search" :class="props.searchBarClass" />
+					<div v-if="props.actionsHeader && props.gridFunctions && props.gridFunctions.functions"
+						class="flex items-center space-x-1 mt-3">
+						<Button v-for="action in props.actionsHeader" :label="action.label"
+							:class="action.actionButtonClass"
+							@click="props.gridFunctions!.functions![action.function.name]"></Button>
+					</div>
+					<slot name="outButtons"></slot>
 				</div>
 			</template>
 			<template #empty> {{ props.emptyMessage }} </template>
 			<template #loading> {{ props.loadingMessage }} </template>
 			<Column v-for="col in columns" v-bind="col">
-				<template #editor="{ data, field }">
-					<InputText v-model="data[field]" />
-				</template>
+
 				<!-- <template #body="slotProps" v-if="col.img">
 				<div class="flex items-center space-x-1">
 					{{ slotProps.data[typeof col.field === "string" ? col.field : 0]
@@ -104,16 +105,14 @@ const filters =
 					/>
 				</div>
 			</template> -->
-				<!-- <template #body="slotProps" v-if="col.actions">
-				<Button
-					v-for="action in col.actions"
-					:label="props.gridFunctions.actionLabel[action.function.name]"
-					:severity="action.actionButtonClass"
-					@click="
-						props.gridFunctions.functions[action.function.name](slotProps.data)
-					"
-				></Button>
-			</template> -->
+				<template #body="slotProps" v-if="col.actions">
+					<Button size="small" v-for="action in col.actions" :label="action.label"
+						:severity="action.tailwindButtonSeverity" class="m-1" @click="() => action.function(slotProps)
+		"></Button>
+				</template>
+				<template #editor="{ data, field }" v-else>
+					<InputText v-model="data[field]" />
+				</template>
 			</Column>
 			<!-- <Column
 			:rowEditor="true"
