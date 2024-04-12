@@ -4,28 +4,22 @@ import {
   rendererProps,
   useJsonFormsControl
 } from "@jsonforms/vue";
-import { useField } from "vee-validate";
+import wrapper from "./wrapper.vue";
 
 const props = defineProps(rendererProps<ControlElement>())
 const controler = useJsonFormsControl(props)
 
-const {
-  value: inputValue,
-  errors,
-  handleBlur,
-  handleChange
-} = useField(
-  controler.control.value.path,
-  undefined,)
 </script>
 <template>
   <!-- <pre>{{controler}}</pre> -->
-  <label>
-    {{ controler.control.value.label }}
+  <wrapper :path="controler.control.value.path" :label="controler.control.value.label" v-slot="{
+    handleChange,
+    handleBlur,
+    value: inputValue
+  }">
+    <!-- string -->
     <InputText :id="controler.control.value.path" :name="controler.control.value.path" :value="inputValue"
       @blur="handleBlur" @change="handleChange" />
-  </label>
-  <!-- <p class="text-red-500 text-xs italic">{{ errorMessage }}</p> -->
-  <p v-for="erro in errors"  class="text-red-500 text-xs italic">{{ erro }}</p>
+  </wrapper>
 
 </template>

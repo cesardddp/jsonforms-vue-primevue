@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import type { ControlElement, } from "@jsonforms/core";
 import { rendererProps, useJsonFormsControl } from "@jsonforms/vue";
-import { useField } from "vee-validate";
+import wrapper from "./wrapper.vue";
+import Calendar from 'primevue/calendar';
+import { DataTableSelectAllChangeEvent } from "primevue/datatable";
 
 
 
@@ -10,22 +12,19 @@ const props = defineProps(rendererProps<ControlElement>())
 const controler = useJsonFormsControl(props)
 
 
-const {
-    value,
-    handleChange,
-    errors,
-} = useField(
-    controler.control.value.path,
-    undefined
-)
 </script>
 <template>
-    <label>
-        {{ controler.control.value.label }}
-        <Calendar showTime hourFormat="24" timeOnly :model-value="value as string" @date-select="handleChange"
-            type="time" :id="props.path" :name="controler.control.value.path" />
-    </label>
-    
-    <!-- <p class="text-red-500 text-xs italic">{{ errorMessage }}</p> -->
-    <p v-for="erro in errors"  class="text-red-500 text-xs italic">{{ erro }}</p>
+    <wrapper :path="controler.control.value.path" :label="controler.control.value.label" v-slot="{
+        handleChange,
+        handleBlur,
+        value
+    }">
+    <!-- time -->
+        <Calendar showTime hourFormat="24" timeOnly @date-select="handleChange"
+            type="time" :id="props.path" :name="controler.control.value.path" 
+            :model-value="value as Date"
+            />
+
+    </wrapper>
+
 </template>

@@ -7,6 +7,7 @@ import {
 	rendererProps,
 	useJsonFormsLayout,
 } from "@jsonforms/vue";
+import { computed } from "vue";
 
 const LayuotRenderizador = defineComponent({
 	name: "LayuotRenderizador",
@@ -19,6 +20,15 @@ const LayuotRenderizador = defineComponent({
 	setup(props) {
 		return useJsonFormsLayout(props);
 	},
+	computed: {
+		sortedElements() {
+			return (this.layout.uischema as any).elements
+				.sort(
+					(a: any, b: any) => (
+						(Number(a.options?.order ?? 0))
+							> (Number(b.options?.order ?? 0)) ? 1 : -1))
+		},
+	},
 });
 
 export default LayuotRenderizador;
@@ -30,22 +40,10 @@ export default LayuotRenderizador;
 </script>
 
 <template>
-	<div
-		v-for="
-      (element, index) in (layout.uischema as any).elements
-      .sort((a: any, b: any) =>  (Number(a.options?.order??0)) > (Number(b.options?.order??0)) ? 1 : -1)
-    "
-		v-bind:key="`${layout.path}-${index}`"
-		class="mb-3"
-	>
+
+	<div v-for="(element, index) in sortedElements" v-bind:key="`${layout.path}-${index}`" class="mb-3">
 		<!-- {{ element.options.order }} -->
-		<DispatchRenderer
-			v-bind:schema="layout.schema"
-			v-bind:uischema="element"
-			v-bind:path="layout.path"
-			v-bind:enabled="layout.enabled"
-			v-bind:renderers="layout.renderers"
-			v-bind:cells="layout.cells"
-		/>
+		<DispatchRenderer v-bind:schema="layout.schema" v-bind:uischema="element" v-bind:path="layout.path"
+			v-bind:enabled="layout.enabled" v-bind:renderers="layout.renderers" v-bind:cells="layout.cells" />
 	</div>
 </template>

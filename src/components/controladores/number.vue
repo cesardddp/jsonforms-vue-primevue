@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { ControlElement, } from "@jsonforms/core";
 import { rendererProps, useJsonFormsControl } from "@jsonforms/vue";
-import { useField } from "vee-validate";
+import wrapper from "./wrapper.vue";
 import InputNumber, { InputNumberInputEvent } from 'primevue/inputnumber';
 
 
@@ -11,19 +11,15 @@ const props = defineProps(rendererProps<ControlElement>())
 const controler = useJsonFormsControl(props)
 
 
-const {
-    value,
-    // handleBlur,
-    errors,
-    handleChange,
-} = useField(
-    controler.control.value.path,
-    undefined, 
-)
+
 </script>
 <template>
-    <label>
-        {{ controler.control.value.label }}
+   	<wrapper :path="controler.control.value.path" :label="controler.control.value.label" v-slot="{
+    handleChange,
+    handleBlur,
+    value
+  }">
+      
         <InputNumber :id="props.path" 
         type="number" 
         :model-value="value as number"
@@ -32,7 +28,7 @@ const {
         @input="(e: InputNumberInputEvent) => {
             handleChange(e.value)
         }" />
-    </label>
-    <!-- <p class="text-red-500 text-xs italic">{{ errorMessage }}</p> -->
-    <p v-for="erro in errors"  class="text-red-500 text-xs italic">{{ erro }}</p>
+
+</wrapper>
+
 </template>

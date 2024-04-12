@@ -1,29 +1,23 @@
 <script lang="ts" setup>
 import type { ControlElement } from "@jsonforms/core";
 import { rendererProps, useJsonFormsControl } from "@jsonforms/vue";
-import { useField } from "vee-validate";
+import wrapper from "./wrapper.vue";
 
 const props = defineProps(rendererProps<ControlElement>());
 
 const controler = useJsonFormsControl(props);
 
-const {
-	value,
-	// handleBlur,
-	errors,
-	handleChange,
-	checked,
-} = useField(controler.control.value.path, undefined, {
-	checkedValue: true,
-	uncheckedValue: false,
-	type: "checkbox",
-});
+
 </script>
 <template>
-	<label>
-		{{ controler.control.value.label }}
-
-		<Checkbox
+	<wrapper :path="controler.control.value.path" :label="controler.control.value.label" v-slot="{
+    handleChange,
+    handleBlur,
+    value,
+	checked
+  }">
+  <!-- bool -->
+    <Checkbox
 			:value
 			:id="props.path"
 			:name="controler.control.value.path"
@@ -31,7 +25,6 @@ const {
 			:binary="true"
 			:checked="checked"
 		/>
-	</label>
-	<!-- <p class="text-red-500 text-xs italic">{{ errorMessage }}</p> -->
-	<p v-for="erro in errors" class="text-red-500 text-xs italic">{{ erro }}</p>
+  </wrapper>
+
 </template>
