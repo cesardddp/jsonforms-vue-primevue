@@ -22,7 +22,8 @@ const LayuotRenderizador = defineComponent({
 	},
 	computed: {
 		sortedElements() {
-			return (this.layout.uischema as any).elements
+			const elements = [...(this.layout.uischema as any).elements]
+			return elements
 				.sort(
 					(a: any, b: any) => (
 						(Number(a.options?.order ?? 0))
