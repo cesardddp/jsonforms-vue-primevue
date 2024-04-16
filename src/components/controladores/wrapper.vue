@@ -18,15 +18,22 @@ const {
 } = useField(
   props.path
 )
+defineExpose({
+  value,
+  handleChange,
+  handleBlur,
+  checked,
+  errors,
+})
 </script>
 <template>
-  <label>
+  <label :for="path" class="block text-gray-700 text-sm font-bold w-full">
     {{ label }}
-    <slot v-bind="{
-      value,
-      handleChange, handleBlur, checked
-    }"></slot>
   </label>
+  <slot v-bind="{
+    value,
+    handleChange, handleBlur, checked
+  }"></slot>
 
   <!-- <p class="text-red-500 text-xs italic">{{ errorMessage }}</p> -->
   <p v-for="erro in errors" class="text-red-500 text-xs italic">{{ erro }}</p>
