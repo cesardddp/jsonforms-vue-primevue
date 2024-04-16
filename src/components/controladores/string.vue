@@ -5,6 +5,7 @@ import {
   useJsonFormsControl
 } from "@jsonforms/vue";
 import wrapper from "./wrapper.vue";
+import InputText from "primevue/inputtext";
 
 const props = defineProps(rendererProps<ControlElement>())
 const controler = useJsonFormsControl(props)
