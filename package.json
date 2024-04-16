@@ -75,7 +75,9 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-dts": "^3.8.1",
-    "vue-tsc": "^2.0.6"
+    "vue-tsc": "^2.0.6",
+    "tailwindcss": "^3.4.2"
+
   },
   "peerDependencies": {
     "@jsonforms/core": "^3.2.1",

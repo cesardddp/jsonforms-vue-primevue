@@ -1,4 +1,4 @@
-import { isBooleanControl, isDateControl, isDateTimeControl, isLayout, isNumberControl, isStringControl, isTimeControl, JsonFormsRendererRegistryEntry, rankWith } from "@jsonforms/core";
+import { isBooleanControl, isDateControl, isDateTimeControl, isEnumControl, isLayout, isNumberControl, isStringControl, isTimeControl, JsonFormsRendererRegistryEntry, rankWith } from "@jsonforms/core";
 import StringControlador from "./components/controladores/string.vue"
 import NumberControlador from "./components/controladores/number.vue"
 import 
@@ -10,10 +10,20 @@ from "./components/controladores/date.vue";
 import 
   TimeControlador
 from "./components/controladores/time.vue";
+import 
+   DateTimeControlador
+from "./components/controladores/dateTime.vue";
+import 
+  EnumControlador
+from "./components/controladores/enum.vue";
 // import Teste from "./components/teste.vue";
 import  LayuotRenderizador from "./components/LayuotRenderizador.vue";
 import Grid from "./components/Grid.vue";
 const formHandlers =   [
+  {
+    renderer: EnumControlador,
+	tester: rankWith(2, isEnumControl),
+  },
   {
     renderer: LayuotRenderizador,
 	tester: rankWith(2, isLayout),
@@ -22,6 +32,10 @@ const formHandlers =   [
   //   renderer: Teste,
   //   tester: rankWith(1, isStringControl)
   // }
+  {
+    renderer: DateTimeControlador,
+    tester: rankWith(1, isDateTimeControl)
+  },
   {
     renderer: StringControlador,
     tester: rankWith(1, isStringControl)
