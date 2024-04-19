@@ -42,7 +42,12 @@ export default LayuotRenderizador;
 
 <template>
 
-	<div v-for="(element, index) in sortedElements" v-bind:key="`${layout.path}-${index}`" class="mb-3">
+	<div 
+		v-for="(element, index) in sortedElements"
+		:key="`${element.scope}-${index}`"
+		class="mb-3"
+	>
+		<!-- {{ `${element.scope}-${index}` }} -->
 		<!-- {{ element.options.order }} -->
 		<DispatchRenderer v-bind:schema="layout.schema" v-bind:uischema="element" v-bind:path="layout.path"
 			v-bind:enabled="layout.enabled" v-bind:renderers="layout.renderers" v-bind:cells="layout.cells" />

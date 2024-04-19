@@ -1,6 +1,6 @@
 {
   "name": "jsonforms-vue-primevue",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Vue 3 PrimeVue renderers for JSON Forms",
   "type": "module",
   "private": false,
