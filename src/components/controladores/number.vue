@@ -14,7 +14,7 @@ const controler = useJsonFormsControl(props)
 
 </script>
 <template>
-   	<wrapper :path="controler.control.value.path" :label="controler.control.value.label" v-slot="{
+  <wrapper :path="controler.control.value.path" :label="controler.control.value.label" v-slot="{
     handleChange,
     handleBlur,
     value
@@ -27,7 +27,9 @@ const controler = useJsonFormsControl(props)
         :step="Number((controler.control.value.schema as any).step??1)"
         @input="(e: InputNumberInputEvent) => {
             handleChange(e.value)
-        }" />
+        }" 
+        class="w-full"
+        />
 
 </wrapper>
 

@@ -55,10 +55,12 @@ const value = computed({
 				</Field>
 			 -->
 		
-		<Dropdown v-model="value" :options="controler.control.value.schema.enum"
+		<Dropdown 
+		class="w-full"
+		v-model="value" :options="controler.control.value.schema.enum"
 		:optionLabel="controler.control.value.uischema.options!.optionLabel"
 		:optionValue="controler.control.value.uischema.options!.optionValue"
-		
+		placeholder="Escolha um item"
 		/>
 			<!-- <template #value="slotProps">
 

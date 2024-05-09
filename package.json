@@ -51,18 +51,16 @@
     "@jsonforms/core": "^3.2.1",
     "@jsonforms/vue": "^3.2.1",
     "@vee-validate/i18n": "^4.12.6",
-    "@vee-validate/rules": "^4.12.6",
     "@vueuse/core": "^9.13.0",
     "ajv": "^8.6.1",
     "core-js": "^3.9.1",
     "cpf-cnpj-validator": "^1.0.3",
-    "dot-object": "^2.1.4",
     "lodash": "^4.17.21",
     "maska": "^2.1.11",
     "object-path": "^0.11.8",
     "password-validator": "^5.3.0",
-    "primeicons": "^6.0.1",
-    "primevue": "^3.48.1",
+    "primeicons": "^7.0.0",
+    "primevue": "^3.51.0",
     "v-mask": "^2.3.0",
     "vee-validate": "^4.12.6",
     "vite-tsconfig-paths": "^4.3.2",
@@ -72,12 +70,11 @@
   "devDependencies": {
     "@types/lodash": "^4.17.0",
     "@vitejs/plugin-vue": "^5.0.4",
+    "tailwindcss": "^3.4.2",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-dts": "^3.8.1",
-    "vue-tsc": "^2.0.6",
-    "tailwindcss": "^3.4.2"
-
+    "vue-tsc": "^2.0.6"
   },
   "peerDependencies": {
     "@jsonforms/core": "^3.2.1",

@@ -34,7 +34,7 @@ const formHandlers =   [
   // }
   {
     renderer: DateTimeControlador,
-    tester: rankWith(1, isDateTimeControl)
+    tester: rankWith(2, isDateTimeControl)
   },
   {
     renderer: StringControlador,
@@ -48,14 +48,11 @@ const formHandlers =   [
     renderer: BoolControlador,
     tester: rankWith(1, isBooleanControl)
   },
-  {
-    renderer: DateControlador,
-    tester: rankWith(2, isDateControl)
-  },
-  {
-    renderer: DateControlador,
-    tester: rankWith(1, isDateTimeControl)
-  },
+  // {
+  //   renderer: DateControlador,
+  //   tester: rankWith(2, isDateControl)
+  // },
+ 
   {
     renderer: TimeControlador,
     tester: rankWith(2, isTimeControl)  }

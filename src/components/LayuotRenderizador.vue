@@ -22,6 +22,7 @@ const LayuotRenderizador = defineComponent({
 	},
 	computed: {
 		sortedElements() {
+			// @ts-ignore
 			const elements = [...(this.layout.uischema as any).elements]
 			return elements
 				.sort(
@@ -45,11 +46,12 @@ export default LayuotRenderizador;
 	<div 
 		v-for="(element, index) in sortedElements"
 		:key="`${element.scope}-${index}`"
-		class="mb-3"
+		class="mb-3 w-full"
 	>
 		<!-- {{ `${element.scope}-${index}` }} -->
 		<!-- {{ element.options.order }} -->
-		<DispatchRenderer v-bind:schema="layout.schema" v-bind:uischema="element" v-bind:path="layout.path"
-			v-bind:enabled="layout.enabled" v-bind:renderers="layout.renderers" v-bind:cells="layout.cells" />
+		<!-- @ts-ignore -->
+		<DispatchRenderer v-bind:schema="(layout as any).schema" v-bind:uischema="element" v-bind:path="(layout as any).path"
+			v-bind:enabled="(layout as any).enabled" v-bind:renderers="(layout as any).renderers" v-bind:cells="(layout as any).cells" />
 	</div>
 </template>

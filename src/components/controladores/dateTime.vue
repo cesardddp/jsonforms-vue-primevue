@@ -21,8 +21,6 @@ const value = computed({
 		return date
 	},
 	set: (newValue) => {
-		// converter para o format YYYY-MM-DDT
-		// hh:mm:ss.sssZ
 		const dataFormatada = newValue?.toISOString();
 		dataFormatada && wrapperRef.value?.handleChange(dataFormatada);
 	}
@@ -41,12 +39,10 @@ timeFormat: {{controler.control.value.uischema.options?.timeFormat}}
 
 		<!-- date -->
 		<Calendar v-model="value" type="date" :id="controler.control.value.path" :name="controler.control.value.path"
-			:time-only="controler.control.value.uischema.options?.timeOnly ?? true"
-			:show-time="controler.control.value.uischema.options?.showTime ?? false"
-			:hourFormat="controler.control.value.uischema.options?.ampm ? '12' : '24'" :date-format="controler.control.value.uischema.options?.dateTimeFormat ?? 'dd/mm/yy' +
-		controler.control.value.uischema.options?.timeFormat ?? 'hh:mm:ss'
-		"
-		append-to="body"
+			:time-only="controler.control.value.uischema.options?.timeOnly ?? false"
+			:show-time="controler.control.value.uischema.options?.showTime ?? true"
+			:hourFormat="controler.control.value.uischema.options?.ampm ? '12' : '24'" :date-format="'dd/mm/yy'"
+		class="w-full"
 		/>
 
 	</wrapper>

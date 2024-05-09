@@ -13,7 +13,7 @@ import Column
 // import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 // import { ref, toRefs } from "vue";
-import { GridProps } from "./merm-schema/custom-types/gridTypes";
+import { GridProps } from "../merm-schema/custom-types/gridTypes";
 import { ref } from "vue";
 
 
@@ -86,6 +86,7 @@ const filters =
 					<div v-if="props.actionsHeader && props.gridFunctions && props.gridFunctions.functions"
 						class="flex items-center space-x-1 mt-3">
 						<Button v-for="action in props.actionsHeader" :label="action.label"
+						
 							:class="action.actionButtonClass"
 							@click="props.gridFunctions!.functions![action.function.name]"></Button>
 					</div>
@@ -107,6 +108,8 @@ const filters =
 			</template> -->
 				<template #body="slotProps" v-if="col.actions">
 					<Button size="small" v-for="action in col.actions" :label="action.label"
+					:icon="action.icon"
+					:loading="action.loading"
 						:severity="action.tailwindButtonSeverity" class="m-1" @click="() => action.function(slotProps)
 		"></Button>
 				</template>
@@ -122,3 +125,4 @@ const filters =
 		</DataTable>
 	</div>
 </template>
+../merm-schema/custom-types/gridTypes
